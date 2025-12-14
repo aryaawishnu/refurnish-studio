@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Article — Refurnish Studio</title>
+<link rel="stylesheet" href="css/responsive.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+    --text:#0b0b0b;
+    --muted:#636363;
+    --accent:#000;
+    --space: clamp(18px, 2.5vw, 40px);
+    --container-pad: 6rem;
+}
+html,body{height:100%;}
+body {
+    font-family: "Inter", Arial, sans-serif;
+    margin:0;
+    padding:0;
+    color:var(--text);
+    background:#fff;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+/* NAV - transparent, minimal (kept same as source) */
+.navbar{
+    background: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 1rem 0;
+    transition: background .25s ease, backdrop-filter .25s ease;
+}
+.navbar.scrolled{
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 18px rgba(15,15,15,0.06);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    padding: .6rem 0;
+}
+.navbar-brand{ font-family: "Playfair Display", serif; font-weight:700; color:var(--text); letter-spacing: -0.5px; font-size:1.1rem;}
+.nav-link{ color:var(--text) !important; font-weight:600; padding: .6rem 1rem; }
+.nav-link{ position:relative; overflow:visible; }
+.nav-link::after{
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 6px;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    width: 100%;
+    height: 2px;
+    background: var(--text);
+    transition: transform .18s ease, opacity .18s ease;
+    opacity: 0;
+}
+.nav-link:hover::after, .nav-link:focus::after, .nav-link.active::after{
+    transform: translateX(-50%) scaleX(1);
+    opacity: 1;
+}
+
+/* HERO - left aligned, big typographic scale (kept same visual hero) */
+.parallax-hero {
+    background-image: url('images/hero.jpg');
+    background-repeat: no-repeat;
+    background-color: #f5f5f5;
+    background-size: cover;
+    background-position: center;
+    min-height: 80vh;
+    display:flex;
+    align-items:center;
+    color:var(--text);
+    position:relative;
+}
+.parallax-hero{ background-image:url('images/hero.jpg'); background-size:cover; background-position:center; min-height:38vh; display:flex; align-items:center; position:relative; }
+.parallax-hero::before{ content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.35) 90%, rgba(0,0,0,0) 100%); z-index:1; }
+.page-header{ position:relative; z-index:2; padding:4rem 0; color:#000000; }
+.page-title{ font-family:"Playfair Display", serif; font-size: clamp(28px, 6vw, 56px); margin:0; }
+.page-sub{ color:rgba(0, 0, 0, 0.9); max-width:780px; }
+
+.hero-intro p{ color:var(--text); font-size:1.05rem; margin-bottom:1.25rem; }
+.hero-intro .lead{ color:var(--text); font-size:1.05rem; margin-bottom:0.8rem; }
+.feature-list{ margin-top:1rem; color:var(--text); font-size:0.95rem; display:flex; gap:1.25rem; flex-wrap:wrap; list-style:none; padding:0; }
+.feature-list li{ display:flex; align-items:center; background: rgba(255,255,255,0.9); padding:6px 10px; border-radius:6px; box-shadow: 0 2px 6px rgba(10,10,10,0.03); }
+.feature-list li::before{ content:'•'; margin-right:8px; color:var(--text); font-weight:700; }
+
+/* Button - minimal outlined */
+.btn-custom {
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--text);
+    border-radius:2px;
+    padding:10px 22px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    transition: background .18s ease, color .18s ease, transform .08s;
+}
+.btn-custom:hover{ background:var(--text); color:#fff; transform:translateY(-1px); }
+
+/* Sections - more whitespace */
+.parallax-section { background-size:cover; background-position:center; min-height:60vh; display:flex; align-items:center; position:relative; }
+.parallax-section::before{ display:none; }
+
+/* Keep original about/services/process/portfolio styles (if present) */
+.about-section { background:#fff; color:#000; padding:6rem 0; }
+.about-hero { font-family: "Playfair Display", serif; font-weight:800; font-size: clamp(48px, 12vw, 50px); margin:0; letter-spacing:-2px; }
+.about-hero small { font-size: .35em; opacity:.8; vertical-align:super; margin-left:.25rem; }
+.about-desc { color:rgba(7, 7, 7, 0.75); max-width:520px; margin-left:0; margin-top:.35rem; text-align:left; }
+
+/* ARTICLE-specific styles */
+.article-meta { text-transform:uppercase; letter-spacing:2px; font-size:.78rem; color:var(--muted); margin-bottom:.6rem; font-weight:700; }
+.article-title { font-family:"Playfair Display", serif; font-weight:700; font-size: clamp(28px, 5.5vw, 42px); margin: 0 0 12px 0; text-align:center; }
+.article-lead { color:rgba(0,0,0,0.7); text-align:center; max-width:880px; margin:0 auto 22px auto; font-size:1.05rem; }
+.article-hero-img { width:100%; height:420px; object-fit:cover; display:block; margin:0 auto; }
+
+.article-container { padding:3.5rem 0 6rem 0; }
+.article-content { font-size:1rem; color:rgba(12,12,12,0.9); line-height:1.85; }
+.article-content h3 { font-family:"Playfair Display", serif; font-weight:700; margin-top:1.6rem; margin-bottom:.6rem; }
+.article-content p { margin-bottom:1rem; color:rgba(12,12,12,0.9); }
+
+/* Contact layout */
+        .contact-section { padding: 5rem 0; }
+        .contact-left { padding-right: 3rem; }
+        .contact-left h2 { font-family: "Playfair Display", serif; font-weight:800; font-size:2rem; letter-spacing:1px; }
+        .contact-sub { color:var(--muted); margin-bottom:1.25rem; font-size:1.05rem; }
+        .contact-group h5 { font-weight:700; margin-top:1.25rem; margin-bottom:.5rem; }
+        .contact-group p { margin:0 0 .6rem 0; color:var(--text); }
+        .contact-map iframe { width:100%; height:520px; border:0; border-radius:8px; box-shadow: 0 8px 30px rgba(10,10,10,0.08); }
+        .social-icons a { display:inline-block; width:38px; height:38px; line-height:38px; text-align:center; border-radius:6px; background:#111; color:#fff; margin-right:8px; }
+        @media (max-width:768px){
+            .parallax-hero { min-height:60vh; }
+            .hero-intro h1{ font-size: clamp(28px, 10vw, 44px); }
+            .navbar{ position:fixed; }
+        }
+        @media (max-width:992px){ .contact-left { padding-right:0; margin-bottom:1.5rem; } .contact-map iframe{ height:360px; } }
+
+/* Sidebar */
+.sidebar { padding-left:2rem; }
+.sidebar .card { border:1px solid rgba(0,0,0,0.06); border-radius:6px; padding:1rem; background:#fff; }
+.detail-row { display:flex; justify-content:space-between; padding:.45rem 0; border-bottom:1px solid rgba(0,0,0,0.04); color:var(--muted); font-size:.95rem; }
+.detail-row:last-child{ border-bottom:0; }
+.author-card { display:flex; gap:1rem; align-items:center; }
+.author-avatar { width:64px; height:64px; border-radius:8px; object-fit:cover; }
+
+/* Social share vertical on large screens */
+.share-vertical { position:sticky; top:120px; display:flex; flex-direction:column; gap:.5rem; align-items:flex-start; }
+.share-vertical a { color:var(--muted); font-weight:700; font-size:.82rem; text-decoration:none; padding:6px 0; }
+.share-label { writing-mode:vertical-rl; transform:rotate(180deg); font-size:.7rem; color:var(--muted); }
+
+/* small screens adjustments */
+@media (max-width:992px){
+    .article-hero-img { height:260px; }
+    .sidebar { padding-left:0; margin-top:1.5rem; }
+    .share-vertical{ display:none; }
+}
+@media (max-width:768px){
+    .parallax-hero { min-height:60vh; }
+    .navbar{ position:fixed; }
+}
+</style>
+</head>
+<body>
+   <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" data-aos="fade-down"><img src="images/logo.png" alt="Refurnish Studio" style="height: 2.1rem;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html" data-aos="fade-down" data-aos-delay="100">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html" data-aos="fade-down" data-aos-delay="200">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html" data-aos="fade-down" data-aos-delay="400">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="blog.html" data-aos="fade-down" data-aos-delay="500">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact" data-aos="fade-down" data-aos-delay="600">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <script>
+        // small script to toggle navbar background on scroll (match index)
+        (function(){
+            const nav = document.querySelector('.navbar');
+            if(!nav) return;
+            const onScroll = () => {
+                if(window.scrollY > 40) {
+                    if(!nav.classList.contains('scrolled')) {
+                        document.body.style.paddingTop = nav.offsetHeight + 'px';
+                    }
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                    document.body.style.paddingTop = '';
+                }
+            };
+            document.addEventListener('scroll', onScroll, {passive:true});
+            window.addEventListener('resize', () => {
+                if(nav.classList.contains('scrolled')) document.body.style.paddingTop = nav.offsetHeight + 'px';
+            });
+            onScroll();
+        })();
+    </script>
+
+<header class="parallax-hero">
+    <div class="container page-header" data-aos="fade-up">
+        <h1 class="page-title">Article</h1>
+            </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<section class="container article-container" data-aos="fade-up">
+    <div class="text-center mb-4">
+        <div class="article-meta">23rd November 2025</div>
+        <h2 class="article-title">Cara Merawat Furnitur Kayu</h2>
+        <p class="article-lead">Langkah, strategi, dan praktik terbaik yang kami gunakan di workshop untuk memastikan furnitur lama kembali berfungsi dan tampil elegan.</p>
+    </div>
+
+    <div class="mb-5">
+        <img src="images/blog1.jpg" alt="Workshop Table" class="article-hero-img rounded" />
+    </div>
+
+    <div class="row">
+        
+        <!-- Main article -->
+        <div class="col-lg-7">
+            <article class="article-content" data-aos="fade-up">
+                <h3>Memahami Kondisi Saat Ini</h3>
+                <p>Langkah pertama sebelum memulai proses refurbish adalah memahami kondisi furnitur—struktur, bahan, kerusakan, serta nilai estetika yang masih dapat dipertahankan. Dokumenasi foto dan pengukuran lengkap sangat membantu tim workshop untuk menilai estimasi waktu dan biaya pekerjaan.</p>
+
+                <h3>Menyusun Strategi Refurnish</h3>
+                <p>Setelah evaluasi awal, kami menyusun strategi: apakah perlu penggantian komponen, perkuatan struktur, atau cukup dilakukan perbaikan permukaan seperti repaint atau refinishing. Kami selalu mempertimbangkan keseimbangan antara mempertahankan karakter aslinya dan meningkatkan fungsi serta kenyamanan.</p>
+
+                <h3>Material & Finishing</h3>
+                <p>Pemilihan material pengganti (kayu, busa, kain) dan jenis finishing menentukan hasil akhir dan daya tahan furnitur. Untuk hasil yang elegan dan tahan lama, kami menggunakan lapisan pelindung yang sesuai, serta teknik aplikatif yang teruji di workshop kami.</p>
+
+                <h3>Proses Workshop & Quality Control</h3>
+                <p>Semua tahapan dipantau ketat oleh tim kami: dari pemisahan komponen, perbaikan struktural, pengamplasan, pengecatan/finishing, sampai pemasangan ulang upholstery. Quality control dilakukan sebelum pengiriman agar hasil sesuai ekspektasi dan aman digunakan.</p>
+
+                <h3>Perawatan Pasca-Servis</h3>
+                <p>Setiap pekerjaan kami sertai rekomendasi perawatan untuk memperpanjang usia pakai furnitur. Hal ini meliputi panduan penggunaan, pembersihan, dan tips restorasi ringan agar tampilan tetap optimal.</p>
+
+                <p style="margin-top:2rem; color:var(--muted); font-size:.95rem;">Semoga panduan singkat ini membantu Anda memahami proses dan nilai dari refurbish furnitur. Jika tertarik, kirim foto furnitur Anda untuk estimasi gratis.</p>
+            </article>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <aside class="sidebar" data-aos="fade-left">
+                <div class="card mb-3">
+                    <div class="detail-row">
+                        <div>DATE</div>
+                        <div>23rd November 2025</div>
+                    </div>
+                    <div class="detail-row">
+                        <div>CATEGORY</div>
+                        <div>Workshop / Tips</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="font-weight:700; margin-bottom:.6rem;">Need help with your piece?</div>
+                    <p style="color:var(--muted); margin-bottom:1rem;">Kirim foto dan ukuran furnitur Anda, kami akan bantu estimasi dan rekomendasi perawatan atau refurbish.</p>
+                    <a href="#contact" class="btn btn-custom">Get in touch</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<!-- contact section -->
+    <section id="contact" class="contact-section bg-light" data-aos="fade-up">
+        <div class="container">
+            <div class="row align-items-start">
+                <div class="col-lg-5 contact-left" data-aos="fade-right">
+                    <h2>CONTACT US</h2>
+                    <p class="contact-sub">Let's Create Together</p>
+
+                    <div class="contact-group">
+                        <h5>Get In Touch</h5>
+                        <p>082130001889</p>
+                        <p>Instagram: refurnish.studio</p>
+                    </div>
+
+                    <div class="contact-group">
+                        <h5>Address</h5>
+                        <p>Jl. Ciwaruga No.10, Ciwaruga, Kec. Parongpong,<br>Kabupaten Bandung Barat, Jawa Barat 40559</p>
+                    </div>
+
+                    <div class="contact-group">
+                        <h5>Hours</h5>
+                        <p>Monday – Sunday&nbsp;&nbsp; : &nbsp;08:00 – 17:00</p>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-7 contact-map" data-aos="fade-left">
+                    <!-- Embedded Google Map (use a stable query-based embed) -->
+                    <iframe src="https://www.google.com/maps?q=Jl.%20Ciwaruga%20No.10%2C%20Ciwaruga%2C%20Parongpong%2C%20Bandung%20Barat%20Indonesia&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p>&copy; 2025 Refurnish Studio. All rights reserved.</p>
+            <div>
+                <a href="https://www.instagram.com/refurnish.studio/?utm_source=ig_web_button_share_sheet" class="text-white me-3">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Dynamic article content based on URL parameter
+(function(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+
+    const articles = {
+        post1: {
+            title: 'Cara Merawat Furnitur Kayu',
+            lead: 'Langkah, strategi, dan praktik terbaik yang kami gunakan di workshop untuk memastikan furnitur lama kembali berfungsi dan tampil elegan.',
+            image: 'images/blog1.jpg',
+            meta: '23rd November 2025',
+            content: `
+                <h3>Memahami Kondisi Saat Ini</h3>
+                <p>Langkah pertama sebelum memulai proses refurbish adalah memahami kondisi furnitur—struktur, bahan, kerusakan, serta nilai estetika yang masih dapat dipertahankan. Dokumenasi foto dan pengukuran lengkap sangat membantu tim workshop untuk menilai estimasi waktu dan biaya pekerjaan.</p>
+                <h3>Menyusun Strategi Refurnish</h3>
+                <p>Setelah evaluasi awal, kami menyusun strategi: apakah perlu penggantian komponen, perkuatan struktur, atau cukup dilakukan perbaikan permukaan seperti repaint atau refinishing. Kami selalu mempertimbangkan keseimbangan antara mempertahankan karakter aslinya dan meningkatkan fungsi serta kenyamanan.</p>
+                <h3>Material & Finishing</h3>
+                <p>Pemilihan material pengganti (kayu, busa, kain) dan jenis finishing menentukan hasil akhir dan daya tahan furnitur. Untuk hasil yang elegan dan tahan lama, kami menggunakan lapisan pelindung yang sesuai, serta teknik aplikatif yang teruji di workshop kami.</p>
+                <h3>Proses Workshop & Quality Control</h3>
+                <p>Semua tahapan dipantau ketat oleh tim kami: dari pemisahan komponen, perbaikan struktural, pengamplasan, pengecatan/finishing, sampai pemasangan ulang upholstery. Quality control dilakukan sebelum pengiriman agar hasil sesuai ekspektasi dan aman digunakan.</p>
+                <h3>Perawatan Pasca-Servis</h3>
+                <p>Setiap pekerjaan kami sertai rekomendasi perawatan untuk memperpanjang usia pakai furnitur. Hal ini meliputi panduan penggunaan, pembersihan, dan tips restorasi ringan agar tampilan tetap optimal.</p>
+                <p style="margin-top:2rem; color:var(--muted); font-size:.95rem;">Semoga panduan singkat ini membantu Anda memahami proses dan nilai dari refurbish furnitur. Jika tertarik, kirim foto furnitur Anda untuk estimasi gratis.</p>
+            `
+        },
+        post2: {
+            title: 'Perbedaan Duco vs HPL',
+            lead: 'Teknik persiapan, priming, dan finishing agar hasil cat rapi dan tahan lama.',
+            image: 'images/blog2.jpg',
+            meta: '15th December 2025',
+            content: `
+                <h3>Apa Itu Duco?</h3>
+                <p>Duco adalah jenis cat berbasis nitrocellulose yang memberikan hasil finishing glossy dan tahan lama. Cocok untuk furnitur kayu yang ingin tampil elegan dan mudah dibersihkan.</p>
+                <h3>Apa Itu HPL?</h3>
+                <p>HPL (High Pressure Laminate) adalah lapisan sintetis yang ditempelkan pada permukaan kayu, memberikan tampilan matte atau glossy dengan variasi warna dan tekstur yang luas.</p>
+                <h3>Perbedaan Utama</h3>
+                <p>Duco lebih fleksibel untuk custom warna, sementara HPL lebih tahan gores dan air. Pilih berdasarkan kebutuhan estetika dan fungsi.</p>
+                <p style="margin-top:2rem; color:var(--muted); font-size:.95rem;">Konsultasikan dengan tim kami untuk rekomendasi terbaik.</p>
+            `
+        },
+        post3: {
+            title: 'Kapan Sebaiknya Refurbish Sofa',
+            lead: 'Teknik persiapan, priming, dan finishing agar hasil cat rapi dan tahan lama.',
+            image: 'images/blog3.jpg',
+            meta: '10th December 2025',
+            content: `
+                <h3>Tanda-Tanda Sofa Perlu Refurbish</h3>
+                <p>Jika kain upholstery sobek, busa empuk aus, atau struktur kayu longgar, saatnya refurbish untuk mengembalikan kenyamanan dan estetika.</p>
+                <h3>Manfaat Refurbish</h3>
+                <p>Menghemat biaya dibanding beli baru, memperpanjang usia pakai, dan menyesuaikan dengan gaya rumah modern.</p>
+                <h3>Proses Refurbish Sofa</h3>
+                <p>Mulai dari pembersihan, penggantian kain dan busa, perbaikan struktur, hingga finishing akhir.</p>
+                <p style="margin-top:2rem; color:var(--muted); font-size:.95rem;">Hubungi kami untuk konsultasi gratis.</p>
+            `
+        },
+        post4: {
+            title: 'Trend Warna Furniture 2025',
+            lead: 'Teknik persiapan, priming, dan finishing agar hasil cat rapi dan tahan lama.',
+            image: 'images/blog4.jpg',
+            meta: '5th December 2025',
+            content: `
+                <h3>Warna Netral yang Abadi</h3>
+                <p>Putih, abu-abu, dan coklat tetap populer untuk tampilan bersih dan timeless.</p>
+                <h3>Aksen Warna Hangat</h3>
+                <p>Teracotta, mustard, dan biru navy menambah karakter tanpa berlebihan.</p>
+                <h3>Tips Memilih Warna</h3>
+                <p>Sesuaikan dengan palet warna ruangan dan pencahayaan alami.</p>
+                <p style="margin-top:2rem; color:var(--muted); font-size:.95rem;">Lihat portfolio kami untuk inspirasi.</p>
+            `
+        }
+    };
+
+    if (postId && articles[postId]) {
+        const article = articles[postId];
+        document.querySelector('.article-meta').textContent = article.meta;
+        document.querySelector('.article-title').textContent = article.title;
+        document.querySelector('.article-lead').textContent = article.lead;
+        document.querySelector('.article-hero-img').src = article.image;
+        document.querySelector('.article-content').innerHTML = article.content;
+    }
+    
+})();
+
+</script>
+</body>
+</html>

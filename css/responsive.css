@@ -1,0 +1,110 @@
+/* Responsive overrides for mobile/tablet
+   Add this file after your main stylesheets in <head>:
+   <link rel="stylesheet" href="css/responsive.css">
+*/
+
+/* Small global container padding to avoid edge-to-edge on small screens */
+@media (max-width: 992px) {
+  .container, .container-fluid {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+/* NAVBAR compact */
+@media (max-width: 992px) {
+  .navbar {
+    padding: 0.45rem 0 !important;
+  }
+  .navbar-brand img { height: 1.9rem !important; }
+  .nav-link { padding: 0.35rem 0.6rem !important; font-size: 0.95rem !important; }
+  .navbar.scrolled { padding: 0.45rem 0 !important; }
+}
+
+/* HERO smaller and tighter */
+@media (max-width: 992px) {
+  .parallax-hero { min-height: 36vh !important; background-position: center top; }
+  .page-header { padding: 1.5rem 0 !important; }
+  .page-title { font-size: clamp(20px, 6vw, 34px) !important; }
+}
+
+/* HERO/SLIDER sizes */
+@media (max-width: 992px) {
+  .slider-panel { padding: 14px 12px !important; box-shadow: 0 10px 22px rgba(0,0,0,0.06) !important; }
+  .slider-stage { height: 260px !important; border-radius: 8px; }
+  .slide img { object-position: center center; }
+  .slider-thumbs { margin-top: 10px; gap:8px; }
+  .slider-thumbs .thumb { width:48px; height:36px; }
+  .slider-prev, .slider-next { display: none !important; } /* conserve space on mobile */
+}
+
+/* Portfolio info & spacing */
+@media (max-width: 768px) {
+  .portfolio-detail { padding: 1.5rem 0 !important; }
+  .portfolio-title { font-size: 1.5rem !important; margin-bottom: 0.6rem !important; }
+  .portfolio-meta { gap: 1rem; flex-wrap:wrap; font-size: 0.95rem; }
+  .portfolio-description { font-size: 0.98rem; line-height: 1.5; }
+  .portfolio-details { grid-template-columns: 1fr !important; gap: 0.9rem; }
+  .detail-item h4 { font-size: 0.95rem; margin-bottom: 0.35rem; }
+  .detail-item p { font-size: 0.95rem; }
+  .portfolio-gallery .gallery-img { height: 140px; border-radius:6px; }
+}
+
+/* Others portfolio - compact layout (single column track, smaller image) */
+@media (max-width: 992px) {
+  .others-portfolio { padding: 1.25rem 0; }
+  .others-portfolio .section-title { font-size: 1.15rem; margin-bottom: 6px; }
+  .others-portfolio .section-underline { width: 42px; margin-bottom: 12px; }
+  .others-slider { max-width: 100% !important; padding: 0; }
+  .other-slide { padding: 6px 0; }
+  .other-item { gap: 12px; flex-direction: column; align-items: flex-start; padding: 8px 0; }
+  .other-item.reverse { flex-direction: column; }
+  .other-image { width: 100% !important; max-width: 100% !important; height: 180px !important; flex: 0 0 auto !important; border-radius:6px; }
+  .other-content h3 { font-size: 1.05rem; margin-top: 8px; }
+  .other-content p { font-size: 0.95rem; max-width: 100%; }
+  /* hide floating nav arrows on narrow screens to avoid overlap */
+  .others-nav { display: none !important; }
+  .others-dots { margin-top: 10px; gap: 8px; }
+}
+
+/* Even smaller screens */
+@media (max-width: 480px) {
+  html { font-size: 14px; } /* slightly smaller base */
+  .page-title { font-size: 20px !important; }
+  .portfolio-title { font-size: 1.2rem !important; }
+  .portfolio-description { font-size: 0.95rem; }
+  .slider-stage { height: 200px !important; }
+  .other-image { height: 160px !important; }
+  .gallery-img { height: 120px; }
+  .contact-map iframe { height: 240px !important; }
+  footer { padding: 1.25rem 0 !important; font-size: 0.95rem; }
+  .btn-custom { padding: 8px 14px !important; font-size: 0.88rem !important; }
+}
+
+/* Improve tap targets (buttons/links) for mobile */
+@media (max-width: 992px) {
+  .btn, .btn-custom, .view-project, .slider-prev, .slider-next, .others-nav {
+    min-height: 40px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+/* Reduce vertical whitespace globally on mobile */
+@media (max-width: 992px) {
+  h1, h2, h3, h4 { margin-top: 0.4rem; margin-bottom: 0.6rem; }
+  p { margin-bottom: 0.75rem; }
+  .section-underline, .divider { margin: 10px 0 14px; }
+}
+
+/* Fix wide images causing horizontal scroll */
+img, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Accessibility: ensure focus outlines remain visible on mobile */
+@media (max-width: 992px) {
+  a:focus, button:focus { outline: 3px solid rgba(0,0,0,0.08); outline-offset: 2px; }
+}

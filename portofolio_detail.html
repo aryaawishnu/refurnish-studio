@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portfolio Detail — Refurnish Studio</title>
+<link rel="stylesheet" href="css/responsive.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+            --text:#0b0b0b;
+            --muted:#636363;
+            --accent:#000;
+            --space: clamp(18px, 2.5vw, 40px);
+            --container-pad: 6rem;
+        }
+        html,body{height:100%;}
+        body {
+            font-family: "Inter", Arial, sans-serif;
+            margin:0;
+            padding:0;
+            color:var(--text);
+            background:#fff;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+
+        /* NAV - transparent, minimal */
+        .navbar{
+            background: transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            padding: 1rem 0;
+            transition: background .25s ease, backdrop-filter .25s ease;
+        }
+        .navbar.scrolled{
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(15,15,15,0.06);
+            /* make navbar stick to top when scrolled */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            padding: .6rem 0;
+        }
+        .navbar-brand{ font-family: "Playfair Display", serif; font-weight:700; color:var(--text); letter-spacing: -0.5px; font-size:1.1rem;}
+        .nav-link{ color:var(--text) !important; font-weight:600; padding: .6rem 1rem; }
+        /* underline animation on hover / active */
+        .nav-link{ position:relative; overflow:visible; }
+        .nav-link::after{
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 6px;
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+            width: 100%;
+            height: 2px;
+            background: var(--text);
+            transition: transform .18s ease, opacity .18s ease;
+            opacity: 0;
+        }
+        .nav-link:hover::after, .nav-link:focus::after, .nav-link.active::after{
+            transform: translateX(-50%) scaleX(1);
+            opacity: 1;
+        }
+
+        /* HERO - left aligned, big typographic scale */
+        .parallax-hero {
+            /* Use local hero image for reliable loading */
+            background-image: url('images/hero.jpg');
+            background-repeat: no-repeat;
+            background-color: #f5f5f5; /* fallback color while image loads */
+            background-size: cover;
+            background-position: center;
+            min-height: 80vh;
+            display:flex;
+            align-items:center;
+            color:var(--text);
+            position:relative;
+        }
+        /* Parallax header */
+        .parallax-hero{ background-image:url('images/hero.jpg'); background-size:cover; background-position:center; min-height:38vh; display:flex; align-items:center; position:relative; }
+        .parallax-hero::before{ content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.35) 90%, rgba(0,0,0,0) 100%); z-index:1; }
+        .page-header{ position:relative; z-index:2; padding:4rem 0; color:#000000; }
+        .page-title{ font-family:"Playfair Display", serif; font-size: clamp(28px, 6vw, 56px); margin:0; }
+        .page-sub{ color:rgba(0, 0, 0, 0.9); max-width:780px; }
+        
+        .hero-intro p{ color:var(--text); font-size:1.05rem; margin-bottom:1.25rem; }
+        .hero-intro .lead{ color:var(--text); font-size:1.05rem; margin-bottom:0.8rem; }
+        .feature-list{ margin-top:1rem; color:var(--text); font-size:0.95rem; display:flex; gap:1.25rem; flex-wrap:wrap; list-style:none; padding:0; }
+        .feature-list li{ display:flex; align-items:center; background: rgba(255,255,255,0.9); padding:6px 10px; border-radius:6px; box-shadow: 0 2px 6px rgba(10,10,10,0.03); }
+        .feature-list li::before{ content:'•'; margin-right:8px; color:var(--text); font-weight:700; }
+
+        /* Button - minimal outlined */
+        .btn-custom {
+            background:transparent;
+            color:var(--text);
+            border:1px solid var(--text);
+            border-radius:2px;
+            padding:10px 22px;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            transition: background .18s ease, color .18s ease, transform .08s;
+        }
+        .btn-custom:hover{ background:var(--text); color:#fff; transform:translateY(-1px); }
+
+        /* Portfolio Detail Styles */
+        .portfolio-detail { padding: 4rem 0; }
+
+        /* --- New hero/slider style to match the provided design --- */
+        .hero-slider {
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin-bottom:2rem;
+            position:relative;
+        }
+        /* white panel that holds the image with large padding and rounded corners */
+        .slider-panel {
+            width:100%;
+            max-width:980px;
+            background:#fff;
+            border-radius:12px;
+            padding:28px 22px 18px; /* space for image and thumbs */
+            box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+            position:relative;
+        }
+        .slider-stage {
+            width:100%;
+            height:420px;
+            border-radius:8px;
+            overflow:hidden;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:#f7f7f7;
+            position:relative;
+        }
+        .slide { position:absolute; inset:0; transition:opacity .45s ease, transform .6s cubic-bezier(.2,.8,.2,1); display:flex; align-items:center; justify-content:center; }
+        .slide img { width:100%; height:100%; object-fit:cover; display:block; }
+        .slide:not(.active){ opacity:0; transform:scale(.995); pointer-events:none; }
+        .slide.active{ opacity:1; transform:none; pointer-events:auto; }
+
+        /* circular arrow controls sitting outside the white panel, vertically centered */
+        .slider-prev, .slider-next {
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            width:46px;
+            height:46px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:#fff;
+            border:1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            cursor:pointer;
+            z-index:40;
+        }
+        .slider-prev { left: calc(50% - 520px); } /* align left outside panel when panel is 980px max */
+        .slider-next { right: calc(50% - 520px); } /* align right */
+        /* fallback small offsets on narrow screens */
+        @media (max-width:1100px){
+            .slider-prev { left: -22px; }
+            .slider-next { right: -22px; }
+        }
+        .slider-prev::after, .slider-next::after {
+            font-size:18px;
+            color:#111;
+            font-weight:700;
+        }
+        .slider-prev::after { content: "\2190"; } /* left arrow */
+        .slider-next::after { content: "\2192"; } /* right arrow */
+
+        /* thumbnails row centered below the image within white panel */
+        .slider-thumbs {
+            display:flex;
+            gap:10px;
+            justify-content:center;
+            align-items:center;
+            margin-top:14px;
+            padding:6px 8px;
+            overflow:auto;
+        }
+        .slider-thumbs .thumb {
+            width:64px;
+            height:44px;
+            border-radius:6px;
+            overflow:hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+            border:2px solid transparent;
+            flex:0 0 auto;
+            cursor:pointer;
+        }
+        .slider-thumbs .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+        .slider-thumbs .thumb.active { border-color: var(--accent); transform:translateY(-2px); }
+
+        /* dots (kept for accessibility but visually hidden) */
+        .slider-dots { position: absolute; left:-9999px; top:-9999px; }
+
+        @media (max-width:768px){
+            .slider-stage { height:260px; }
+            .slider-prev, .slider-next { display:none; }
+            .slider-thumbs .thumb { width:50px; height:36px; }
+            .slider-panel { padding:18px 14px 12px; }
+        }
+
+        .portfolio-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
+        .gallery-img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; }
+        .gallery-img:hover { transform: scale(1.05); }
+        .portfolio-info { margin-bottom: 3rem; }
+        .portfolio-title { font-family: "Playfair Display", serif; font-size: 2.5rem; margin-bottom: 1rem; }
+        .portfolio-meta { display: flex; gap: 2rem; margin-bottom: 2rem; color: var(--muted); }
+        .portfolio-description { font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
+        .portfolio-details { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .detail-item h4 { font-weight: 700; margin-bottom: 0.5rem; }
+        .detail-item p { color: var(--muted); }
+
+        /* Contact layout */
+        .contact-section { padding: 5rem 0; }
+        .contact-left { padding-right: 3rem; }
+        .contact-left h2 { font-family: "Playfair Display", serif; font-weight:800; font-size:2rem; letter-spacing:1px; }
+        .contact-sub { color:var(--muted); margin-bottom:1.25rem; font-size:1.05rem; }
+        .contact-group h5 { font-weight:700; margin-top:1.25rem; margin-bottom:.5rem; }
+        .contact-group p { margin:0 0 .6rem 0; color:var(--text); }
+        .contact-map iframe { width:100%; height:520px; border:0; border-radius:8px; box-shadow: 0 8px 30px rgba(10,10,10,0.08); }
+        .social-icons a { display:inline-block; width:38px; height:38px; line-height:38px; text-align:center; border-radius:6px; background:#111; color:#fff; margin-right:8px; }
+        @media (max-width:768px){
+            .parallax-hero { min-height:60vh; }
+            .hero-intro h1{ font-size: clamp(28px, 10vw, 44px); }
+            .navbar{ position:fixed; }
+        }
+        @media (max-width:992px){ .contact-left { padding-right:0; margin-bottom:1.5rem; } .contact-map iframe{ height:360px; } }
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" data-aos="fade-down"><img src="images/logo.png" alt="Refurnish Studio" style="height: 2.1rem;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html" data-aos="fade-down" data-aos-delay="100">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html" data-aos="fade-down" data-aos-delay="200">About</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="portfolio.html" data-aos="fade-down" data-aos-delay="400">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html" data-aos="fade-down" data-aos-delay="500">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact" data-aos="fade-down" data-aos-delay="600">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <script>
+        // small script to toggle navbar background on scroll (match index)
+        (function(){
+            const nav = document.querySelector('.navbar');
+            if(!nav) return;
+            const onScroll = () => {
+                if(window.scrollY > 40) {
+                    if(!nav.classList.contains('scrolled')) {
+                        document.body.style.paddingTop = nav.offsetHeight + 'px';
+                    }
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                    document.body.style.paddingTop = '';
+                }
+            };
+            document.addEventListener('scroll', onScroll, {passive:true});
+            window.addEventListener('resize', () => {
+                if(nav.classList.contains('scrolled')) document.body.style.paddingTop = nav.offsetHeight + 'px';
+            });
+            onScroll();
+        })();
+    </script>
+
+<header class="parallax-hero">
+    <div class="container page-header" data-aos="fade-up">
+        <h1 class="page-title">Portfolio Detail</h1>
+    </div>
+</header>
+
+    <section class="portfolio-detail" data-aos="fade-up">
+    <div class="container">
+        <!-- Updated hero slider layout: white panel with large image and thumbnails underneath -->
+        <div id="portfolio-hero" class="hero-slider" aria-label="Before After Slider">
+            <div class="slider-panel" id="slider-panel" role="region" aria-live="polite">
+                <div class="slider-stage" id="slider-stage" tabindex="0" aria-label="Main project image">
+                    <!-- slides injected by JS -->
+                </div>
+
+                <!-- thumbs row -->
+                <div class="slider-thumbs" id="slider-thumbs" aria-hidden="false">
+                    <!-- thumbs injected by JS -->
+                </div>
+
+                <!-- visually hidden (kept for compatibility) -->
+                <div class="slider-dots" id="slider-dots" aria-hidden="true"></div>
+            </div>
+
+            <!-- Circular arrow controls sitting outside panel (positioned with CSS) -->
+            <button class="slider-prev" id="slider-prev" aria-label="Previous image"></button>
+            <button class="slider-next" id="slider-next" aria-label="Next image"></button>
+        </div>
+        
+        <div class="portfolio-info">
+            <h2 class="portfolio-title" id="portfolio-title">Modern Sofa Re-Upholstery</h2>
+            <div class="portfolio-meta">
+                <span id="portfolio-category">Category: Sofa</span>
+                <span id="portfolio-date">Date: December 2025</span>
+            </div>
+            <p class="portfolio-description" id="portfolio-description">
+                Transformasi total sofa lama menjadi tampilan modern premium menggunakan bahan fabric tebal dan busa HD. 
+                Proyek ini melibatkan pemisahan komponen sofa, penggantian busa yang sudah aus, dan re-upholstery dengan kain berkualitas tinggi.
+            </p>
+        </div>
+
+        
+        <div class="portfolio-details">
+            <div class="detail-item">
+                <h4>Services</h4>
+                <p id="portfolio-services">Re-Upholstery, Fabric Replacement</p>
+            </div>
+            <div class="detail-item">
+                <h4>Location</h4>
+                <p id="portfolio-location">Bandung, Indonesia</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- contact section -->
+<section id="contact" class="contact-section bg-light">
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col-lg-5 contact-left" data-aos="fade-right">
+                <h2>CONTACT US</h2>
+                <p class="contact-sub">Let's Create Together</p>
+
+                <div class="contact-group">
+                    <h5>Get In Touch</h5>
+                    <p>082130001889</p>
+                    <p>Instagram: refurnish.studio</p>
+                </div>
+
+                <div class="contact-group">
+                    <h5>Address</h5>
+                    <p>Jl. Ciwaruga No.10, Ciwaruga, Kec. Parongpong,<br>Kabupaten Bandung Barat, Jawa Barat 40559</p>
+                </div>
+
+                <div class="contact-group">
+                    <h5>Hours</h5>
+                    <p>Monday – Sunday&nbsp;&nbsp; : &nbsp;08:00 – 17:00</p>
+                </div>
+
+            </div>
+
+            <div class="col-lg-7 contact-map" data-aos="fade-left">
+                <iframe src="https://www.google.com/maps?q=Jl.%20Ciwaruga%20No.10%2C%20Ciwaruga%2C%20Parongpong%2C%20Bandung%20Barat%20Indonesia&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-white text-center py-4">
+    <div class="container">
+        <p>&copy; 2025 Refurnish Studio. All rights reserved.</p>
+        <div>
+            <a href="https://www.instagram.com/refurnish.studio/?utm_source=ig_web_button_share_sheet" class="text-white me-3">Instagram</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Dynamic portfolio detail content based on URL parameter & updated slider behavior
+(function(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('id');
+
+    // Hero slider initializer (creates slides, thumbnails and controls)
+    function initHeroSlider(images) {
+        const stage = document.getElementById('slider-stage');
+        const thumbs = document.getElementById('slider-thumbs');
+        const dots = document.getElementById('slider-dots');
+        const prevBtn = document.getElementById('slider-prev');
+        const nextBtn = document.getElementById('slider-next');
+        if (!stage || !thumbs) return;
+
+        stage.innerHTML = '';
+        thumbs.innerHTML = '';
+        if (dots) dots.innerHTML = '';
+
+        images.forEach((src, i) => {
+            // slide
+            const s = document.createElement('div');
+            s.className = 'slide' + (i === 0 ? ' active' : '');
+            s.dataset.index = i;
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = `Project image ${i+1}`;
+            img.className = 'slide-img';
+            s.appendChild(img);
+            stage.appendChild(s);
+
+            // thumbnail
+            const t = document.createElement('div');
+            t.className = 'thumb' + (i === 0 ? ' active' : '');
+            t.dataset.index = i;
+            const ti = document.createElement('img');
+            ti.src = src;
+            ti.alt = `Thumbnail ${i+1}`;
+            t.appendChild(ti);
+            t.addEventListener('click', () => goTo(i));
+            thumbs.appendChild(t);
+
+            // dot for legacy (screen readers / keyboard)
+            if (dots) {
+                const dot = document.createElement('button');
+                dot.dataset.index = i;
+                dot.className = i === 0 ? 'active' : '';
+                dot.setAttribute('aria-label', `Go to image ${i+1}`);
+                dot.addEventListener('click', () => goTo(i));
+                dots.appendChild(dot);
+            }
+        });
+
+        let current = 0;
+
+        function update() {
+            const slides = stage.querySelectorAll('.slide');
+            slides.forEach((sl, idx) => sl.classList.toggle('active', idx === current));
+            Array.from(thumbs.children).forEach((d, idx) => d.classList.toggle('active', idx === current));
+            if (dots) Array.from(dots.children).forEach((d, idx) => d.classList.toggle('active', idx === current));
+            // update focus for accessibility
+            const activeSlide = stage.querySelector('.slide.active img');
+            if (activeSlide) activeSlide.setAttribute('aria-hidden', 'false');
+        }
+
+        function goTo(i) { current = i; update(); }
+        function prevSlide() { current = (current - 1 + images.length) % images.length; update(); }
+        function nextSlide() { current = (current + 1) % images.length; update(); }
+
+        if (prevBtn) prevBtn.onclick = prevSlide;
+        if (nextBtn) nextBtn.onclick = nextSlide;
+
+        // keyboard navigation when slider focused
+        stage.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // expose simple API in DOM for external calls if needed
+        stage._slider = { goTo, prevSlide, nextSlide };
+    }
+
+    const projects = {
+        p1: {
+            title: 'Modern Sofa Re-Upholstery',
+            category: 'Sofa',
+            date: 'December 2025',
+            description: 'Transformasi total sofa lama menjadi tampilan modern premium menggunakan bahan fabric tebal dan busa HD. Proyek ini melibatkan pemisahan komponen sofa, penggantian busa yang sudah aus, dan re-upholstery dengan kain berkualitas tinggi.',
+            heroImg: 'images/project1-before.jpg',
+            gallery: ['images/project1-after.jpg'],
+            client: 'Private Client',
+            duration: '2 Weeks',
+            services: 'Re-Upholstery, Fabric Replacement',
+            location: 'Bandung, Indonesia'
+        },
+        p2: {
+            title: 'Repaint Kayu — Duco Matte',
+            category: 'Lemari',
+            date: 'November 2025',
+            description: 'Proses refinishing lemari dan meja kayu lama menjadi tampilan minimalis modern dengan finishing duco matte. Termasuk pengamplasan, priming, dan aplikasi cat akhir.',
+            heroImg: 'images/project2-before.jpg',
+            gallery: ['images/project2-after.jpg'],
+            client: 'Home Owner',
+            duration: '1 Week',
+            services: 'Refinishing, Repaint',
+            location: 'Bandung, Indonesia'
+        },
+        p3: {
+            title: 'Custom Coffee Table',
+            category: 'Meja TV',
+            date: 'October 2025',
+            description: 'Pembuatan ulang meja kopi custom dengan kombinasi kayu solid & detail industrial modern. Desain unik dengan finishing natural wood.',
+            heroImg: 'images/project3-before.jpg',
+            gallery: ['images/project3-after.jpg'],
+            client: 'Interior Designer',
+            duration: '3 Weeks',
+            services: 'Custom Furniture, Woodworking',
+            location: 'Bandung, Indonesia'
+        },
+        p4: {
+            title: 'Custom Sofa',
+            category: 'Sofa',
+            date: 'September 2025',
+            description: 'Pembuatan ulang sofa custom dengan kombinasi kulit & detail industrial modern. Desain ergonomis dengan material premium.',
+            heroImg: 'images/project4-before.jpg',
+            gallery: ['images/project4-after.jpg'],
+            client: 'Corporate Client',
+            duration: '4 Weeks',
+            services: 'Custom Furniture, Upholstery',
+            location: 'Bandung, Indonesia'
+        }
+    };
+
+    if (projectId && projects[projectId]) {
+        const project = projects[projectId];
+        document.getElementById('portfolio-title').textContent = project.title;
+        document.getElementById('portfolio-category').textContent = 'Category: ' + project.category;
+        document.getElementById('portfolio-date').textContent = 'Date: ' + project.date;
+        document.getElementById('portfolio-description').textContent = project.description;
+        // initialize hero slider with images (thumbnail strip + before/after if available)
+        (function(){
+            const after = project.heroImg;
+            const before = after.replace('-after', '-before');
+            // Build images array more resiliently: include before only if available filename different
+            const images = [];
+            // attempt to include before (common pattern), otherwise duplicate heroImg so thumb layout still works
+            images.push(before);
+            images.push(after);
+            // also add gallery images (dedupe)
+            project.gallery.forEach(g => {
+                if (!images.includes(g)) images.push(g);
+            });
+            initHeroSlider(images);
+        })();
+        document.getElementById('portfolio-client').textContent = project.client;
+        document.getElementById('portfolio-duration').textContent = project.duration;
+        document.getElementById('portfolio-services').textContent = project.services;
+        document.getElementById('portfolio-location').textContent = project.location;
+
+        const gallery = document.getElementById('portfolio-gallery');
+        gallery.innerHTML = '';
+        project.gallery.forEach(img => {
+            const imgElement = document.createElement('img');
+            imgElement.src = img;
+            imgElement.alt = 'Gallery';
+            imgElement.className = 'gallery-img';
+            gallery.appendChild(imgElement);
+        });
+    } 
+})();
+</script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
