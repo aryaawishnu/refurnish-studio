@@ -50,3 +50,39 @@
     margin-bottom: 0.75rem !important;
   }
 }
+/* About section: ensure space between CTA and image when columns stack */
+@media (max-width: 768px) {
+  /* Make CTA full-width and add bottom spacing */
+  .about-section .btn-custom,
+  .container.my-5 .btn-custom,
+  .about-section .btn,
+  .container.my-5 .btn {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 1.25rem !important; /* space below CTA */
+    box-sizing: border-box;
+  }
+
+  /* When two columns stack, add top margin to the second column's image */
+  .about-section .row > .col-md-6 + .col-md-6 img,
+  .container.my-5 .row > .col-md-6 + .col-md-6 img,
+  .about-section .row > [class*="col-"] + [class*="col-"] img,
+  .container.my-5 .row > [class*="col-"] + [class*="col-"] img {
+    margin-top: 1.25rem !important;
+    display: block;
+  }
+
+  /* If image uses .img-fluid inside the second column */
+  .about-section .row > .col-md-6 + .col-md-6 .img-fluid,
+  .container.my-5 .row > .col-md-6 + .col-md-6 .img-fluid {
+    margin-top: 1.25rem !important;
+  }
+
+  /* Neutralize possible negative top offsets on stacked columns */
+  .about-section .row > .col-md-6 + .col-md-6,
+  .container.my-5 .row > .col-md-6 + .col-md-6 {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
