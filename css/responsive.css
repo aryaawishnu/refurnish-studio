@@ -1,149 +1,190 @@
-/* Mobile fixes — stronger rules to prevent horizontal scrolling and clipping.
-   Load this LAST in <head> so it can override page styles.
-*/
-
-:root {
-  --mobile-container-pad: 1.25rem;
-}
-
-/* Global safety */
+/* ======================================================
+   GLOBAL RESET & MOBILE SAFETY
+====================================================== */
 *,
 *::before,
-*::after { box-sizing: border-box; }
-
-/* Force no horizontal scrolling as a safety-net */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden !important; /* strong safety rule */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-width: 0;
+*::after {
+  box-sizing: border-box;
 }
 
-/* Make media scale reliably */
-img, picture, svg, video, iframe {
-  max-width: 100% !important;
-  height: auto !important;
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevent any element from forcing horizontal scroll */
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
   display: block;
 }
 
-/* Break long words that could push width */
-body, p, h1, h2, h3, h4, h5, h6, .project-excerpt, .card-text {
-  word-break: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
+/* ======================================================
+   BOOTSTRAP CONTAINER SAFETY
+====================================================== */
+.container,
+.container-fluid {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  overflow-x: hidden;
 }
 
-/* Containers padding safe on mobile */
-.container, .container-fluid {
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
+/* ======================================================
+   NAVBAR FIX
+====================================================== */
+.navbar {
+  left: 0;
+  right: 0;
+  max-width: 100%;
 }
 
-/* Reduce large hero vertical paddings on small screens */
-.parallax-hero > .container {
-  padding-top: calc(var(--mobile-container-pad) + 0.5rem) !important;
-  padding-bottom: calc(var(--mobile-container-pad) + 0.5rem) !important;
+.navbar * {
+  max-width: 100%;
 }
 
-/* Slider / panel: keep inside viewport and remove wide absolute offsets on small screens */
-.slider-panel {
-  max-width: 100% !important;
-  width: 100% !important;
-  overflow: hidden !important;
+.nav-link::after {
+  width: 80%;
 }
 
-/* The circular controls have calc(50% - 520px) in original CSS which can push outside viewport.
-   We clamp and then hide controls on small screens entirely. */
-.slider-prev, .slider-next {
-  left: auto !important;
-  right: auto !important;
-  transform: none !important;
-  box-sizing: border-box;
-}
-
-/* On smaller viewports hide the circular outside arrows and allow thumbs / swipe */
-@media (max-width: 992px) {
-  .slider-prev, .slider-next { display: none !important; }
-}
-
-/* Thumbs: allow horizontal scroll inside thumbnail row but prevent page overflow */
-.slider-thumbs {
-  display: flex;
-  gap: 10px;
-  padding: 6px 8px;
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch;
+/* ======================================================
+   HERO / PARALLAX SECTIONS
+====================================================== */
+.parallax-hero,
+.parallax-section {
   width: 100%;
-  box-sizing: border-box;
+  max-width: 100%;
+  overflow: hidden;
 }
 
-/* Ensure slide images never overflow */
-.slider-stage, .slider-stage .slide, .slide img {
-  max-width: 100% !important;
-  width: 100% !important;
+.parallax-hero > .container {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-/* Featured / blog card responsive stacking */
-.featured-card {
-  display: flex;
-  gap: 0;
-  flex-direction: row;
-}
-@media (max-width: 768px) {
-  .featured-card { flex-direction: column !important; }
-  .featured-card img { width: 100% !important; height: auto !important; }
-  .featured-card .card-body { padding: 1rem !important; }
+/* ======================================================
+   FLEX & GRID GLOBAL SAFETY
+====================================================== */
+[class*="flex"],
+.d-flex {
+  flex-wrap: wrap;
 }
 
-/* Limit fixed image heights that can create overflow */
-.featured-card img, .blog-card img, .portfolio-card img {
-  width: 100% !important;
-  height: auto !important;
-  object-fit: cover;
+.row {
+  margin-left: 0;
+  margin-right: 0;
 }
 
-/* Project thumbnails: shrink on very small screens */
+/* ======================================================
+   CARDS & CONTENT BLOCKS
+====================================================== */
+.project-card,
+.portfolio-card,
+.featured-card,
+.blog-card,
+.service-item,
+.service-card,
+.price-card,
+.testimonial {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* ======================================================
+   PORTFOLIO PAGE FIX
+====================================================== */
 .project-thumb {
-  width: 160px;
-  height: 160px;
-  flex: 0 0 160px;
-}
-@media (max-width: 576px) {
-  .project-thumb { width: 96px !important; height: 96px !important; flex: 0 0 96px !important; }
-  .project-title { font-size: 1.05rem !important; }
-  .project-excerpt { font-size: .92rem !important; }
+  max-width: 100%;
 }
 
-/* Category nav: allow inner horizontal scroll instead of overflowing body */
-.category-nav {
-  gap: .5rem;
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 6px;
+@media (max-width: 768px) {
+  .project-card {
+    flex-direction: column;
+  }
+
+  .project-thumb {
+    width: 100%;
+    height: auto;
+    flex: none;
+  }
 }
 
-/* Contact map iframe responsiveness */
-.contact-map iframe { width: 100% !important; max-width: 100% !important; height: 520px; }
-@media (max-width: 992px) { .contact-map iframe { height: 360px !important; } }
-
-/* Defensive rule: any element with explicit large fixed max-width reduce to 100% */
-[style*="max-width:980px"], [style*="width:980px"], .slider-panel[style] {
-  max-width: 100% !important;
-  width: 100% !important;
+/* ======================================================
+   PORTFOLIO DETAIL (SLIDER) FIX
+====================================================== */
+.hero-slider,
+.slider-panel {
+  max-width: 100%;
+  overflow: hidden;
 }
 
-/* Make large hero title wrap and respect container */
-.hero-intro h1, .page-title, .about-hero, .services-hero {
-  max-width: 100% !important;
-  word-break: break-word !important;
-  hyphens: auto !important;
+/* Kill absolute arrows on mobile (major overflow source) */
+@media (max-width: 768px) {
+  .slider-prev,
+  .slider-next {
+    display: none !important;
+  }
+
+  .slider-stage {
+    height: 260px;
+  }
 }
 
-/* Keep focus outlines visible for accessibility */
-:focus { outline: 2px solid rgba(0,0,0,0.12) !important; outline-offset: 2px !important; }
+/* ======================================================
+   BLOG FEATURED CARD FIX
+====================================================== */
+@media (max-width: 768px) {
+  .featured-card {
+    flex-direction: column;
+  }
 
-/* Last-resort safety for tiny devices */
-@media (max-width: 420px) {
-  html, body { overflow-x: hidden !important; }
+  .featured-card img {
+    width: 100%;
+    height: 220px;
+  }
+}
+
+/* ======================================================
+   ARTICLE PAGE FIX
+====================================================== */
+.article-hero-img {
+  max-width: 100%;
+  height: auto;
+}
+
+.sidebar {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ======================================================
+   CONTACT / MAP
+====================================================== */
+.contact-map iframe {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* ======================================================
+   TYPOGRAPHY SAFETY
+====================================================== */
+h1, h2, h3, h4, h5, h6,
+p, span, a {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ======================================================
+   FINAL MOBILE HARD STOP (ANTI SCROLL)
+====================================================== */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
 }
