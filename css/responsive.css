@@ -1,273 +1,106 @@
-/* Mobile expanded navbar styling (append to css/responsive.css) */
-@media (max-width: 991.98px) {
-  /* Make the collapse appear as a panel overlay under the nav */
-  .navbar .collapse.navbar-collapse {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0; /* we position at top so header inside collapse can show */
-    height: 60vh; /* adjust how tall the menu should be */
-    max-height: 80vh;
-    background: #fff;
-    z-index: 1050;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-    overflow: hidden;
-    transform: translateY(-4px);
-    transition: transform .22s ease, opacity .18s ease;
-  }
-  /* When closed, keep it hidden off-screen via Bootstrap .collapse (handled automatically),
-     but we style visible state via .show (Bootstrap adds) */
-  .navbar .collapse.navbar-collapse:not(.show) {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-6px);
-  }
-  .navbar .collapse.navbar-collapse.show {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-
-  /* Mobile header inside collapse (logo + close) */
-  .mobile-menu-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 18px;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,248,244,0.98)); /* subtle warm tone like ref */
-  }
-  .mobile-menu-header .mobile-logo img { height: 2.2rem; display:block; }
-
-  /* Close button (circle X) */
-  .mobile-close {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: transparent;
-    border: 1px solid rgba(0,0,0,0.06);
-    position: relative;
-    cursor: pointer;
-  }
-  .mobile-close::before, .mobile-close::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 14px;
-    height: 2px;
-    background: #111;
-    transform-origin: center;
-  }
-  .mobile-close::before { transform: translate(-50%, -50%) rotate(45deg); }
-  .mobile-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
-
-  /* Nav list style inside mobile: large tappable rows with subtle background and separators */
-  .navbar .navbar-nav {
-    display: block;
-    padding: 12px 0;
-  }
-  .navbar .navbar-nav .nav-item {
-    width: 100%;
-  }
-  .navbar .navbar-nav .nav-link {
-    display: block;
-    padding: 18px 20px;
-    font-size: 1.05rem;
-    color: #0b0b0b !important;
-    background: rgba(255,255,255,0.98);
-    border-bottom: 1px solid rgba(0,0,0,0.04);
-  }
-  .navbar .navbar-nav .nav-link:hover,
-  .navbar .navbar-nav .nav-link:focus,
-  .navbar .navbar-nav .nav-link.active {
-    background: #fbf8f0; /* pale highlight */
-    text-decoration: none;
-  }
-
-  /* Add a small chevron indicator below the panel (like the example arrow) */
-  .navbar .collapse.navbar-collapse.show::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: -18px;
-    width: 36px;
-    height: 36px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"><path d="M18 12 L8 22 H28 Z" fill="%23ffffff" opacity="0.9"/></svg>') center/contain no-repeat;
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.08));
-  }
-
-  /* ensure desktop nav-brand not duplicated with the mobile logo inside collapse */
-  .navbar-brand.d-lg-block { display: none !important; }
-  .mobile-menu-header + .navbar-nav { margin-top: 6px; }
-
-  /* Make sure links are easy to tap */
-  .navbar .nav-link { min-height: 48px; line-height: 1.2; }
-}
-
-/* ---------- Fix mobile overflow & improve Process (Alur Kerja) responsiveness ---------- */
-
-/* Small devices global safety: prevent accidental horizontal scrolling caused by elements */
-@media (max-width: 767.98px) {
-  html, body {
-    overflow-x: hidden; /* prevents page-level horizontal scroll caused by components */
-  }
-}
-
-/* Make images and background elements respect container width */
-img, .parallax-hero, .parallax-hero * {
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-/* Default behavior for process on medium screens: keep horizontal-ish if space permits */
-@media (max-width: 992px) {
+/* Mobile: vertical timeline style for Process / Alur Kerja (append or replace mobile rules) */
+@media (max-width: 768px) {
+  /* container spacing */
   .process-section {
     padding-left: 1rem;
     padding-right: 1rem;
     box-sizing: border-box;
   }
 
+  /* timeline wrapper */
   .process-steps {
     position: relative;
-    padding-left: 0;
-    padding-right: 0;
-    gap: 0.9rem;
-    box-sizing: border-box;
-  }
-
-  .process-steps::before {
-    left: 1rem;
-    right: 1rem;
-    top: 40px;
-    height: 2px;
-    border-top: 2px dashed rgba(0,0,0,0.07);
-    z-index: 1;
-    content: '';
-    position: absolute;
-  }
-
-  .process-steps .step {
-    min-width: 0 !important;
-    flex: 1 1 160px;
-  }
-}
-
-/* ---------- MOBILE: vertical timeline layout ---------- */
-@media (max-width: 768px) {
-  /* make the steps stack vertically */
-  .process-steps {
-    display: block;
-    position: relative;
-    padding-left: 64px; /* space for icons + vertical line */
+    padding-left: 72px; /* space for icons + vertical line */
     padding-top: 8px;
     padding-bottom: 8px;
+    margin: 0;
     box-sizing: border-box;
   }
 
-  /* vertical connector line (dashed-like) */
+  /* vertical connector line (mint tone) */
   .process-steps::before {
-    content: '';
+    content: "";
     position: absolute;
-    left: 36px; /* aligns under the center of .step-icon */
+    left: 32px; /* aligns to center of the icon column */
     top: 8px;
     bottom: 8px;
     width: 2px;
-    /* dashed appearance using repeating-linear-gradient */
-    background-image: repeating-linear-gradient(
-      to bottom,
-      rgba(0,0,0,0.07) 0px,
-      rgba(0,0,0,0.07) 4px,
-      rgba(0,0,0,0) 4px,
-      rgba(0,0,0,0) 10px
-    );
+    background: #dff4ea; /* soft mint */
     border-radius: 2px;
     z-index: 1;
   }
 
+  /* each step as a row with a left column for icon and right for content */
   .process-steps .step {
-    position: relative;
-    display: flex;
-    gap: 0.75rem;
-    align-items: flex-start;
-    padding: 12px 0;
-    margin: 0;
-    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
     background: transparent;
+    position: relative;
     z-index: 2;
   }
+  .process-steps .step:last-child {
+    border-bottom: none;
+  }
 
-  /* place the circular icon on the left, overlapping the vertical line */
+  /* circular numbered icon (mint) */
   .process-steps .step-icon {
-    position: absolute;
-    left: 0;
-    top: 12px;
-    width: 56px;
-    height: 56px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: #fff;
-    border: 1px solid rgba(0,0,0,0.06);
+    background: #e6fff5; /* lighter mint bg */
+    border: 1px solid rgba(0,0,0,0.04);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
-    color: var(--text, #0b0b0b);
+    font-weight: 700;
+    color: #0b0b0b;
     box-shadow: 0 6px 18px rgba(10,10,10,0.04);
+    font-size: 0.95rem;
+    justify-self: center;
     z-index: 3;
-    flex: 0 0 56px;
   }
 
-  /* text area placed to the right of the icon */
+  /* title + description layout */
   .process-steps .step-title {
-    margin: 0 0 4px 0;
+    margin: 0;
     font-weight: 700;
     font-size: 1rem;
+    color: #0b0b0b;
     text-align: left;
-    padding-left: 0;
   }
-
   .process-steps .step-desc {
-    margin: 0;
-    color: var(--muted, #636363);
+    margin: 6px 0 0;
+    color: #636363;
     font-size: 0.95rem;
     line-height: 1.45;
     text-align: left;
   }
 
-  /* add left padding so content doesn't overlap the icon */
+  /* ensure content doesn't overlap icon area */
   .process-steps .step > *:not(.step-icon) {
-    margin-left: 72px; /* pushes content clear of the icon */
-    width: calc(100% - 72px);
+    margin-left: 0; /* grid handles spacing */
     box-sizing: border-box;
   }
 
-  /* Slightly smaller icon on very narrow screens */
+  /* very narrow screens: slightly smaller icons and adjusted left offsets */
   @media (max-width: 420px) {
     .process-steps {
-      padding-left: 56px;
+      padding-left: 64px;
     }
-    .process-steps::before { left: 30px; }
+    .process-steps::before { left: 28px; }
+    .process-steps .step {
+      grid-template-columns: 48px 1fr;
+      gap: 10px;
+      padding: 12px 0;
+    }
     .process-steps .step-icon {
-      left: 0;
-      top: 10px;
-      width: 48px;
-      height: 48px;
-      flex: 0 0 48px;
+      width: 40px;
+      height: 40px;
+      font-size: 0.9rem;
     }
-    .process-steps .step > *:not(.step-icon) {
-      margin-left: 64px;
-      width: calc(100% - 64px);
-    }
-  }
-}
-
-/* Extra safety: if any other element still causes overflow, make containers clip */
-@media (max-width: 576px) {
-  .container, .container .row {
-    overflow-x: hidden;
-    box-sizing: border-box;
   }
 }
