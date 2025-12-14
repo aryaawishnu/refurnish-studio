@@ -1,0 +1,52 @@
+/* Mobile spacing tweaks
+   - Add vertical spacing between CTA and following images on small screens
+   - Stack CTA buttons in hero for better spacing and touch targets
+   - Scope changes to hero / portfolio / about sections only
+*/
+@media (max-width: 768px) {
+  /* Make CTA buttons stack and occupy full width for simpler spacing */
+  .parallax-hero .btn-custom,
+  .about-section .btn-custom,
+  .portfolio-section .btn-custom,
+  .services-section .btn-custom {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    margin: 0 0 1.25rem 0 !important; /* spacing below CTA */
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* If there are multiple CTA buttons next to each other, give bottom spacing to each
+     and a small gap when they remain side-by-side on slightly larger mobile widths */
+  .parallax-hero .btn-custom + .btn-custom,
+  .portfolio-section .btn-custom + .btn-custom,
+  .about-section .btn-custom + .btn-custom {
+    margin-top: 0.5rem !important;
+  }
+
+  /* Extra spacing between CTA and the next media block (images / cards) */
+  .parallax-hero .btn-custom + img,
+  .parallax-hero .btn-custom + .img-fluid,
+  .portfolio-section .btn-custom + img,
+  .portfolio-section .btn-custom + .portfolio-card,
+  .about-section .btn-custom + img,
+  .about-section .btn-custom + .img-fluid {
+    margin-top: 1.25rem !important;
+  }
+
+  /* Ensure thumbnails / cards below CTAs don't visually "touch" the button edges */
+  .portfolio-card,
+  .featured-card,
+  .blog-card,
+  .project-card {
+    margin-top: 1rem !important;
+  }
+
+  /* Small visual tweak: increase space between feature-list and stacked CTAs in hero */
+  .parallax-hero .feature-list {
+    margin-top: 1rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
