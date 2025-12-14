@@ -1,166 +1,149 @@
-/* Mobile / overflow fixes for Refurnish Studio
-   - global box-sizing
-   - prevent horizontal scroll
-   - make media elements responsive
-   - clamp slider control positions to avoid pushing layout outside viewport
-   - stack large cards on small screens
-   - reduce large hero padding on small screens
+/* Mobile fixes — stronger rules to prevent horizontal scrolling and clipping.
+   Load this LAST in <head> so it can override page styles.
 */
 
-:root{
-  --mobile-container-pad: 2rem; /* fallback for small screens */
+:root {
+  --mobile-container-pad: 1.25rem;
 }
 
-/* Global */
+/* Global safety */
 *,
 *::before,
 *::after { box-sizing: border-box; }
 
+/* Force no horizontal scrolling as a safety-net */
 html, body {
+  max-width: 100%;
+  overflow-x: hidden !important; /* strong safety rule */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* prevent horizontal scroll caused by accidental overflow */
-  overflow-x: hidden;
-  min-width: 0; /* avoid long children forcing width on some browsers */
+  min-width: 0;
 }
 
-/* Make images / media respect container */
+/* Make media scale reliably */
 img, picture, svg, video, iframe {
-  max-width: 100%;
-  height: auto;
+  max-width: 100% !important;
+  height: auto !important;
   display: block;
 }
 
-/* prevent long words / URLs from causing horizontal overflow */
+/* Break long words that could push width */
 body, p, h1, h2, h3, h4, h5, h6, .project-excerpt, .card-text {
-  word-wrap: break-word;
+  word-break: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
 }
 
-/* Small-container padding safety */
+/* Containers padding safe on mobile */
 .container, .container-fluid {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
 }
 
-/* Hero vertical padding: reduce on small screens */
+/* Reduce large hero vertical paddings on small screens */
 .parallax-hero > .container {
-  /* keep behaviour consistent but avoid huge top padding on phones */
-  padding-top: calc( (var(--container-pad, 6rem)) + 2rem );
-  padding-bottom: var(--container-pad, 6rem);
-}
-@media (max-width: 992px) {
-  .parallax-hero > .container {
-    padding-top: calc(var(--mobile-container-pad) + 1rem);
-    padding-bottom: calc(var(--mobile-container-pad) + 1rem);
-  }
+  padding-top: calc(var(--mobile-container-pad) + 0.5rem) !important;
+  padding-bottom: calc(var(--mobile-container-pad) + 0.5rem) !important;
 }
 
-/* Slider: keep slider-panel within viewport and clamp prev/next positions */
+/* Slider / panel: keep inside viewport and remove wide absolute offsets on small screens */
 .slider-panel {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* The circular controls have calc(50% - 520px) in original CSS which can push outside viewport.
+   We clamp and then hide controls on small screens entirely. */
+.slider-prev, .slider-next {
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
   box-sizing: border-box;
 }
 
-/* position controls but clamp to safe min/max so they don't create horizontal scrollbar */
-.slider-prev, .slider-next {
-  /* allow the existing desktop calc to operate, but clamp to safe values */
-  /* left/right will never push too far outside viewport */
-  --control-offset: calc(50% - 520px);
-}
-.slider-prev { left: clamp(-40px, var(--control-offset), 12px); }
-.slider-next { right: clamp(-40px, var(--control-offset), 12px); }
-
-/* On small screens hide circular controls and rely on thumbnails / swipe */
-@media (max-width: 768px) {
-  .slider-prev, .slider-next { display: none; }
-  .slider-stage { height: auto; min-height: 200px; }
-  .slide img { object-fit: cover; }
+/* On smaller viewports hide the circular outside arrows and allow thumbs / swipe */
+@media (max-width: 992px) {
+  .slider-prev, .slider-next { display: none !important; }
 }
 
-/* Ensure stage images never exceed container width */
-.slider-stage, .slider-stage .slide, .slide img { max-width:100%; }
-
-/* Thumbs row scrolls horizontally but not overflow the page */
+/* Thumbs: allow horizontal scroll inside thumbnail row but prevent page overflow */
 .slider-thumbs {
+  display: flex;
+  gap: 10px;
   padding: 6px 8px;
-  margin-top: 14px;
-  overflow-x: auto;
+  overflow-x: auto !important;
   -webkit-overflow-scrolling: touch;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Featured / blog card stacking on small screens */
+/* Ensure slide images never overflow */
+.slider-stage, .slider-stage .slide, .slide img {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Featured / blog card responsive stacking */
 .featured-card {
   display: flex;
   gap: 0;
-  align-items: stretch;
   flex-direction: row;
 }
 @media (max-width: 768px) {
-  .featured-card {
-    flex-direction: column;
-  }
-  .featured-card img {
-    width: 100%;
-    height: auto;
-    max-height: none;
-  }
-  .featured-card .card-body {
-    padding: 1rem;
-  }
+  .featured-card { flex-direction: column !important; }
+  .featured-card img { width: 100% !important; height: auto !important; }
+  .featured-card .card-body { padding: 1rem !important; }
 }
 
-/* Blog & portfolio cards: limit fixed heights that may create overflow */
+/* Limit fixed image heights that can create overflow */
 .featured-card img, .blog-card img, .portfolio-card img {
-  width: 100%;
-  height: auto;
-  max-height: 420px;
+  width: 100% !important;
+  height: auto !important;
   object-fit: cover;
 }
 
-/* Project cards: make thumbnail flexible on small screens */
+/* Project thumbnails: shrink on very small screens */
 .project-thumb {
   width: 160px;
   height: 160px;
   flex: 0 0 160px;
 }
 @media (max-width: 576px) {
-  .project-card { gap: 12px; }
-  .project-thumb {
-    width: 96px;
-    height: 96px;
-    flex: 0 0 96px;
-  }
-  .project-title { font-size: 1.05rem; }
-  .project-excerpt { font-size: .92rem; }
+  .project-thumb { width: 96px !important; height: 96px !important; flex: 0 0 96px !important; }
+  .project-title { font-size: 1.05rem !important; }
+  .project-excerpt { font-size: .92rem !important; }
 }
 
-/* Prevent off-canvas horizontal shift when category-nav buttons are many */
+/* Category nav: allow inner horizontal scroll instead of overflowing body */
 .category-nav {
   gap: .5rem;
-  overflow-x: auto;
+  overflow-x: auto !important;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 6px;
 }
 
-/* Make contact-map iframe responsive */
-.contact-map iframe { width: 100%; max-width: 100%; height: 520px; }
-@media (max-width: 992px) {
-  .contact-map iframe { height: 360px; }
-}
+/* Contact map iframe responsiveness */
+.contact-map iframe { width: 100% !important; max-width: 100% !important; height: 520px; }
+@media (max-width: 992px) { .contact-map iframe { height: 360px !important; } }
 
-/* Small utility: ensure any element with fixed large width becomes fluid */
-[style*="width: 980px"], [style*="max-width:980px"] {
+/* Defensive rule: any element with explicit large fixed max-width reduce to 100% */
+[style*="max-width:980px"], [style*="width:980px"], .slider-panel[style] {
   max-width: 100% !important;
+  width: 100% !important;
 }
 
-/* Accessibility: keep focus outlines visible */
-:focus { outline: 2px solid #0003; outline-offset: 2px; }
+/* Make large hero title wrap and respect container */
+.hero-intro h1, .page-title, .about-hero, .services-hero {
+  max-width: 100% !important;
+  word-break: break-word !important;
+  hyphens: auto !important;
+}
 
-/* Final safety: if any element still overflows, hide x-axis (this prevents page scroll but not recommended as first line fix) */
+/* Keep focus outlines visible for accessibility */
+:focus { outline: 2px solid rgba(0,0,0,0.12) !important; outline-offset: 2px !important; }
+
+/* Last-resort safety for tiny devices */
 @media (max-width: 420px) {
-  html, body { overflow-x: hidden; }
+  html, body { overflow-x: hidden !important; }
 }
