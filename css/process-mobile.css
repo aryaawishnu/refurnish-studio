@@ -1,0 +1,74 @@
+/* Mobile layout for Process section (about.html)
+   - show numbered list
+   - hide circular icons (.step-icon) on small screens
+   - title bold + underline, description on new line with indent
+   - remove the dashed timeline line for mobile
+*/
+@media (max-width: 768px) {
+  /* turn the steps container into a normal stacked list */
+  .process-steps {
+    display: block !important;
+    padding: 0 !important;
+    counter-reset: process-step;
+  }
+
+  /* hide the horizontal dashed connector used on desktop */
+  .process-steps::before {
+    display: none !important;
+  }
+
+  /* each step becomes a block row with spacing */
+  .process-steps .step {
+    display: block !important;
+    padding: 0.5rem 0 1rem 0 !important;
+    margin: 0 0 0.5rem 0 !important;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    position: relative;
+  }
+
+  /* hide the round icon (desktop) to avoid duplication */
+  .process-steps .step-icon {
+    display: none !important;
+  }
+
+  /* inject a numeric counter before each .step (1., 2., ...) */
+  .process-steps .step::before {
+    counter-increment: process-step;
+    content: counter(process-step) ".";
+    display: inline-block;
+    width: 28px;
+    min-width: 28px;
+    margin-right: 10px;
+    font-weight: 700;
+    color: #0b0b0b;
+    vertical-align: top;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* title sits inline with the number on same row, bold and underlined */
+  .process-steps .step-title {
+    display: inline-block;
+    font-weight: 700;
+    text-decoration: underline;
+    margin: 0;
+    font-size: 1rem;
+    vertical-align: top;
+    line-height: 1.15;
+  }
+
+  /* description moves to the next line and is slightly muted */
+  .process-steps .step-desc {
+    display: block;
+    margin-top: 0.45rem;
+    margin-left: 38px; /* align under the title (number width + gap) */
+    color: var(--muted, #636363);
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+
+  /* ensure better tap target spacing */
+  .process-steps .step + .step {
+    margin-top: 0.5rem;
+  }
+}
