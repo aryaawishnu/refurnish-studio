@@ -107,3 +107,108 @@
   /* Make sure links are easy to tap */
   .navbar .nav-link { min-height: 48px; line-height: 1.2; }
 }
+
+/* ---------- Fix mobile overflow & improve Process (Alur Kerja) responsiveness ---------- */
+
+/* Small devices global safety: prevent accidental horizontal scrolling caused by elements */
+@media (max-width: 767.98px) {
+  html, body {
+    overflow-x: hidden; /* prevents page-level horizontal scroll caused by components */
+  }
+}
+
+/* Make images and background elements respect container width */
+img, .parallax-hero, .parallax-hero * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure process section adapts nicely on smaller screens */
+@media (max-width: 992px) {
+  .process-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+  }
+
+  /* Constrain the decorative dashed line so it won't overflow */
+  .process-steps {
+    position: relative;
+    padding-left: 0;
+    padding-right: 0;
+    gap: 0.9rem;
+    box-sizing: border-box;
+  }
+
+  /* On tablet sizes we reduce left/right offsets of the line */
+  .process-steps::before {
+    left: 1rem;
+    right: 1rem;
+    top: 40px;
+    height: 2px;
+    border-top: 2px dashed rgba(0,0,0,0.07);
+    z-index: 1;
+  }
+
+  /* Make each step able to shrink (override the inline min-width in page CSS) */
+  .process-steps .step {
+    min-width: 0 !important;
+    flex: 1 1 160px;
+  }
+}
+
+/* On narrow phones, stack steps vertically and hide the decorative line to avoid overflow */
+@media (max-width: 768px) {
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  /* Hide the long dashed connector to avoid any forced width and keep layout clean */
+  .process-steps::before {
+    display: none;
+  }
+
+  /* Make each step full-width and remove min-width to prevent horizontal scroll */
+  .process-steps .step {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+    text-align: left;
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    padding: 0.6rem 0;
+  }
+
+  /* Make the icon smaller and left-aligned for compact rows */
+  .process-steps .step-icon {
+    flex: 0 0 54px;
+    width: 54px;
+    height: 54px;
+    margin-bottom: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .process-steps .step-title {
+    text-align: left;
+    margin: 0;
+  }
+
+  .process-steps .step-desc {
+    margin: 0;
+  }
+}
+
+/* Extra safety: if any other element still causes overflow, make containers clip */
+@media (max-width: 576px) {
+  .container, .container .row {
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+}
