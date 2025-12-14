@@ -107,50 +107,44 @@
   /* Make sure links are easy to tap */
   .navbar .nav-link { min-height: 48px; line-height: 1.2; }
 }
-/* =========================
-   PROCESS / ALUR KERJA - MOBILE FIX
-   ========================= */
-@media (max-width: 768px) {
+/* Global responsive fixes to prevent horizontal scrolling and ensure media scale */
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* mematikan horizontal scroll; dipakai karena ada elemen yang sebelumnya menyebabkan overflow */
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
-  .process-steps {
-    flex-direction: column;
-    gap: 2rem;
-    padding-left: 1.5rem;
-  }
+/* Make all media elements responsive */
+img, picture, svg, video, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
-  /* Matikan garis horizontal */
-  .process-steps::before {
-    left: 24px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    height: 100%;
-    border-top: none;
-    border-left: 2px dashed rgba(0,0,0,0.12);
-  }
+/* Ensure bootstrap rows inside containers don't cause overflow on small devices */
+.container, .container-fluid {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 
-  .step {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 0;
-    text-align: left;
-  }
-
-  .step-icon {
-    width: 42px;
-    height: 42px;
-    font-size: 0.95rem;
-    flex-shrink: 0;
-  }
-
-  .step-title {
-    font-size: 0.95rem;
-    margin: 0 0 4px;
-  }
-
-  .step-desc {
-    font-size: 0.9rem;
-    line-height: 1.5;
+/* Small tweak: allow collapse overlay to not overflow full width on mobile */
+@media (max-width: 991.98px) {
+  .navbar .collapse.navbar-collapse {
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
+
+/* Fix for any rows that had direct children which might overflow (guard) */
+.row > a, .row > button {
+  display: block;
+  width: 100%;
+}
+
+/* If you prefer to keep overflow visible change/remove overflow-x rule above.
+   The remaining original responsive styles can remain below or in your existing responsive.css */
