@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Form Konsultasi &amp; Estimasi — homesolution.id</title>
+<link rel="stylesheet" href="css/responsive.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --text:#0b0b0b;
+        --muted:#636363;
+        --accent:#000;
+        --accent-green:#4A403A;
+        --accent-green-dark:#2f2722;
+        --accent-red:#C33B04;
+    }
+    html,body{ height:100%; }
+    body{
+        font-family:"Poppins", Arial, sans-serif;
+        margin:0; padding:0 0 96px;
+        color:var(--text);
+        background:#fff;
+        -webkit-font-smoothing:antialiased;
+    }
+    /* NAV */
+    .navbar{ background:transparent; position:absolute; top:0; left:0; right:0; z-index:50; padding:1rem 0; transition:background .25s,backdrop-filter .25s; }
+    .navbar.scrolled{ background:rgba(255,255,255,0.95); backdrop-filter:blur(6px); box-shadow:0 6px 18px rgba(15,15,15,0.06); position:fixed; z-index:9999; padding:.6rem 0; }
+    .navbar-brand{ font-family:"Poppins",sans-serif; font-weight:700; color:var(--text); font-size:1.1rem; }
+    .nav-link{ color:var(--text) !important; font-weight:600; padding:.6rem 1rem; }
+
+    /* PAGE HEADER */
+    .page-header-band{ background:#4A403A; padding:7.5rem 0 3rem; color:#fff; text-align:center; }
+    .page-header-band h1{ font-family:"Poppins",sans-serif; font-weight:700; font-size:clamp(22px,5vw,36px); margin:0 0 .4rem; }
+    .page-header-band p{ margin:0 auto; max-width:560px; opacity:.88; font-size:.92rem; }
+    .page-header-band .category-pill{
+        display:inline-block; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.35);
+        border-radius:999px; padding:.3rem 1rem; font-size:.78rem; font-weight:600;
+        text-transform:uppercase; letter-spacing:.5px; margin-bottom:.75rem;
+    }
+
+    .form-page-container{ max-width:760px; margin:-1.75rem auto 2rem; padding:0 1rem; position:relative; z-index:5; }
+
+    /* CARDS */
+    .form-card{ background:#fff; border-radius:14px; box-shadow:0 10px 30px rgba(10,10,10,0.06); padding:1.5rem; margin-bottom:1.1rem; }
+
+    /* TRUST */
+    .trust-list{ list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.65rem 1rem; }
+    .trust-list li{ display:flex; align-items:center; gap:.6rem; font-size:.9rem; font-weight:600; }
+    .trust-check{ width:22px; height:22px; flex:0 0 22px; border-radius:6px; background:var(--accent-green); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.78rem; }
+
+    /* ACCORDION */
+    .accordion-button{ font-weight:700; font-size:.92rem; }
+    .accordion-button:not(.collapsed){ color:var(--accent-green); background:rgba(8,95,94,0.07); }
+    .accordion-button:focus{ box-shadow:0 0 0 3px rgba(8,95,94,0.14); }
+    .accordion-body{ font-size:.88rem; color:var(--muted); line-height:1.65; }
+
+    /* SECTION TITLES */
+    .section-title{ font-weight:800; font-size:1rem; margin-bottom:.15rem; }
+    .section-title .req{ color:var(--accent-red); }
+    .section-sub{ color:var(--muted); font-size:.82rem; margin-bottom:.75rem; }
+
+    /* CHECKBOX / RADIO ROWS */
+    .option-row{ display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.82rem 0; border-bottom:1px solid rgba(0,0,0,0.06); cursor:pointer; transition:background .1s; }
+    .option-row:last-child{ border-bottom:none; }
+    .option-label{ font-size:.93rem; }
+    .option-price{ font-size:.88rem; color:var(--muted); white-space:nowrap; }
+    .option-price s{ opacity:.55; margin-right:.3rem; }
+    .option-price strong{ color:var(--text); font-weight:700; }
+    .option-row input[type="checkbox"], .option-row input[type="radio"]{ width:20px; height:20px; accent-color:var(--accent-green); flex:0 0 20px; cursor:pointer; }
+
+    /* SERVICE ROWS */
+    .service-row{ display:flex; align-items:center; gap:1rem; padding:.88rem 0; border-bottom:1px solid rgba(0,0,0,0.06); }
+    .service-row:last-child{ border-bottom:none; }
+    .service-icon-box{ width:48px; height:48px; flex:0 0 48px; border-radius:10px; background:#f3f3f3; display:flex; align-items:center; justify-content:center; font-size:1.4rem; }
+    .service-meta{ flex:1; min-width:0; }
+    .service-meta-title{ font-weight:700; font-size:.92rem; }
+    .service-meta-desc{ color:var(--muted); font-size:.78rem; line-height:1.45; }
+    .service-add-btn{ border:1.5px solid var(--accent-green); color:var(--accent-green); background:#fff; font-weight:700; font-size:.76rem; padding:.4rem .85rem; border-radius:999px; white-space:nowrap; cursor:pointer; transition:all .15s; }
+    .service-add-btn.added{ background:var(--accent-green); color:#fff; }
+
+    /* INFO BOX */
+    .info-box{ background:#eaf6f6; border:1px solid rgba(8,95,94,0.18); color:#075251; font-size:.83rem; border-radius:8px; padding:.82rem 1rem; margin-top:.85rem; line-height:1.55; }
+    .info-box.warn{ background:#fff7f5; border-color:rgba(195,59,4,0.18); color:#7a2500; }
+
+    /* FIELD GROUP */
+    .field-group label{ font-weight:700; font-size:.84rem; display:block; margin-bottom:.38rem; }
+    .field-group .form-control, .field-group .form-select{ border-radius:8px; border:1px solid rgba(0,0,0,0.12); padding:.58rem .75rem; font-size:.93rem; }
+    .field-group .form-control:focus, .field-group .form-select:focus{ border-color:var(--accent-green); box-shadow:0 0 0 3px rgba(8,95,94,0.14); }
+
+    /* STICKY BAR */
+    .sticky-bar{ position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid rgba(0,0,0,0.08); box-shadow:0 -8px 24px rgba(0,0,0,0.06); padding:.85rem 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; z-index:1000; }
+    .sticky-bar-label{ font-size:.72rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.4px; }
+    .sticky-bar-count{ font-weight:800; font-size:.98rem; color:var(--text); }
+    .sticky-submit-btn{ background:var(--accent-green); color:#fff; border:none; font-weight:700; padding:.75rem 1.5rem; border-radius:8px; text-transform:uppercase; letter-spacing:.5px; font-size:.8rem; cursor:pointer; transition:background .15s; }
+    .sticky-submit-btn:hover{ background:var(--accent-green-dark); }
+
+    .page-footer-note{ text-align:center; color:var(--muted); font-size:.78rem; margin:1.5rem 0 0; }
+
+    @media (max-width:576px){
+        .form-card{ padding:1.1rem; }
+        .sticky-bar{ padding:.7rem 1rem; }
+        .sticky-submit-btn{ padding:.62rem 1rem; font-size:.74rem; }
+        .trust-list{ grid-template-columns:1fr; }
+    }
+    .bg-light { background-color: #f8f9fa !important; }
+    body { background:#fff; }
+
+        /* Shared theme: white menu on transparent hero, dark after scroll */
+        .navbar:not(.scrolled) .nav-link{ color:#fff !important; }
+        .navbar:not(.scrolled) .nav-link::after{ background:#fff; }
+        .navbar.scrolled .nav-link{ color:var(--text) !important; }
+        .navbar.scrolled .nav-link::after{ background:var(--text); }
+        .navbar:not(.scrolled) .navbar-toggler{ border-color:rgba(255,255,255,.55); }
+        .navbar.scrolled .navbar-toggler{ border-color:rgba(0,0,0,.15); }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="homesolution.id" style="height:2.1rem;"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<script>
+(function(){
+    const nav = document.querySelector('.navbar');
+    if(!nav) return;
+    const fn = () => {
+        if(window.scrollY > 40){ if(!nav.classList.contains('scrolled')) document.body.style.paddingTop = nav.offsetHeight+'px'; nav.classList.add('scrolled'); }
+        else { nav.classList.remove('scrolled'); document.body.style.paddingTop=''; }
+    };
+    document.addEventListener('scroll', fn, {passive:true});
+    window.addEventListener('resize', ()=>{ if(nav.classList.contains('scrolled')) document.body.style.paddingTop=nav.offsetHeight+'px'; });
+    fn();
+})();
+</script>
+
+<div class="page-header-band">
+    <div class="container">
+        <div class="category-pill" id="headerPill">Semua Layanan</div>
+        <h1 id="headerTitle">Form Konsultasi &amp; Estimasi</h1>
+        <p id="headerSub">Jawab beberapa pertanyaan singkat, tim kami akan merespons lewat WhatsApp.</p>
+    </div>
+</div>
+
+<div class="form-page-container">
+    <form id="requestForm" novalidate>
+
+        <!-- Trust badges -->
+        <div class="form-card">
+            <ul class="trust-list">
+                <li><span class="trust-check">✓</span> Garansi pengerjaan</li>
+                <li><span class="trust-check">✓</span> Material premium &amp; finishing rapi</li>
+                <li><span class="trust-check">✓</span> Tim berpengalaman 10+ tahun</li>
+                <li><span class="trust-check">✓</span> Bisa ambil-antar furnitur Anda</li>
+            </ul>
+        </div>
+
+        <!-- FAQ accordion -->
+        <div class="form-card">
+            <div class="accordion accordion-flush" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">Tentang Layanan homesolution.id</button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">Kami mengerjakan refurbish, repaint, re-upholstery, dan custom modifikasi furnitur kayu maupun berlapis kain di workshop kami yang berlokasi di Parongpong, Bandung Barat.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">Bagaimana Cara Pemesanan?</button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">Isi form ini, tim kami akan menghubungi Anda via WhatsApp untuk estimasi awal, lalu menjadwalkan survey (bila diperlukan) sebelum pengerjaan dimulai di workshop kami.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">Apakah Ada Garansi?</button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">Ya, setiap pekerjaan kami sertai garansi pengerjaan. Detail dan jangka waktu garansi akan diinformasikan sesuai jenis layanan yang Anda pilih.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">Apakah Bisa Ambil-Antar?</button>
+                    </h2>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">Bisa, untuk area Bandung dan Bandung Barat. Untuk Bali, biaya pengiriman akan diinformasikan terpisah setelah form ini terkirim.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DYNAMIC: Keluhan / Masalah -->
+        <div class="form-card" id="cardKeluhan">
+            <div class="section-title" id="keluhanTitle">Keluhan / Masalah <span class="req">*</span></div>
+            <div class="section-sub">Boleh pilih lebih dari satu</div>
+            <div id="keluhanList"></div>
+            <div id="keluhanInfo"></div>
+        </div>
+
+        <!-- DYNAMIC: Layanan yang Dibutuhkan -->
+        <div class="form-card" id="cardLayanan">
+            <div class="section-title" id="layananTitle">Layanan yang Anda Butuhkan</div>
+            <div class="section-sub" id="layananSub">Tambahkan layanan spesifik (opsional)</div>
+            <div id="layananList"></div>
+        </div>
+
+        <!-- DYNAMIC: Tipe / Jenis -->
+        <div class="form-card" id="cardTipe">
+            <div class="section-title" id="tipeTitle">Tipe / Ukuran <span class="req">*</span></div>
+            <div class="section-sub" id="tipeSub">Pilih salah satu</div>
+            <div id="tipeList"></div>
+            <div id="tipeInfo"></div>
+        </div>
+
+        <!-- Lokasi -->
+        <div class="form-card">
+            <div class="section-title">Lokasi Anda <span class="req">*</span></div>
+            <div class="field-group mt-2">
+                <select id="formLokasi" class="form-select" required>
+                    <option value="Bandung" selected>Bandung</option>
+                    <option value="Bandung Barat">Bandung Barat</option>
+                    <option value="Bali">Bali</option>
+                </select>
+            </div>
+            <div class="info-box">Untuk Bali, kemungkinan ada biaya pengiriman tambahan — tim kami akan informasikan setelah form ini terkirim.</div>
+        </div>
+
+        <!-- Jadwal -->
+        <div class="form-card">
+            <div class="section-title">Kapan Anda Membutuhkan Layanan? <span class="text-muted fw-normal" style="font-size:.78rem;">(opsional)</span></div>
+            <div class="row g-3 mt-1">
+                <div class="col-sm-6 field-group">
+                    <label for="formTanggal">Tanggal</label>
+                    <input type="date" id="formTanggal" class="form-control">
+                </div>
+                <div class="col-sm-6 field-group">
+                    <label for="formWaktu">Pukul</label>
+                    <input type="time" id="formWaktu" class="form-control" min="08:00" max="17:00" step="1800">
+                </div>
+            </div>
+        </div>
+
+        <!-- Data diri -->
+        <div class="form-card">
+            <div class="section-title">Data Diri Anda <span class="req">*</span></div>
+            <div class="row g-3 mt-1">
+                <div class="col-12 field-group">
+                    <label for="formNama">Nama Lengkap</label>
+                    <input type="text" id="formNama" class="form-control" placeholder="Nama Anda" required>
+                </div>
+                <div class="col-12 field-group">
+                    <label for="formHp">No. WhatsApp</label>
+                    <input type="tel" id="formHp" class="form-control" placeholder="08xxxxxxxxxx" inputmode="numeric" autocomplete="tel" pattern="[0-9]{8,15}" maxlength="15" required>
+                </div>
+                <div class="col-12 field-group">
+                    <label for="formCatatan">Catatan Tambahan <span class="text-muted fw-normal">(opsional)</span></label>
+                    <textarea id="formCatatan" class="form-control" rows="3" placeholder="Ukuran, warna/finishing yang diinginkan, kondisi saat ini, dll."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <p class="page-footer-note">Setelah dikirim, Anda akan diarahkan ke WhatsApp untuk melanjutkan percakapan dengan tim homesolution.id.</p>
+
+        <div class="sticky-bar">
+            <div>
+                <div class="sticky-bar-label">Dipilih</div>
+                <div class="sticky-bar-count" id="selectionCount">0 dipilih</div>
+            </div>
+            <button type="submit" class="sticky-submit-btn">Kirim &amp; Lanjut ke WhatsApp</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// ─────────────────────────────────────────────────────────────────
+// CATEGORY CONFIG — each key matches the `?layanan=` URL param
+// To add more categories later, add a new entry here.
+// ─────────────────────────────────────────────────────────────────
+const CATEGORY_CONFIG = {
+
+  'Sofa': {
+    headerTitle: 'Konsultasi Sofa',
+    headerSub: 'Ceritakan kondisi sofa Anda, tim kami siap bantu estimasi.',
+    keluhanTitle: 'Keluhan / Masalah Sofa',
+    keluhan: [
+      { label: 'Kain / kulit sobek atau mengelupas' },
+      { label: 'Busa kempes atau tidak nyaman' },
+      { label: 'Rangka goyang / patah' },
+      { label: 'Warna pudar atau kotor permanen' },
+      { label: 'Lainnya' },
+    ],
+    keluhanInfo: null,
+    layananTitle: 'Pilih Layanan Sofa',
+    layananSub: 'Tambahkan layanan yang Anda butuhkan (opsional)',
+    layanan: [
+      { icon: '🛋️', title: 'Re-Upholstery', desc: 'Ganti kain & busa sofa dengan material baru pilihan Anda.' },
+      { icon: '🧽', title: 'Ganti Busa Saja', desc: 'Penggantian busa HD/busa keras tanpa ganti kain.' },
+      { icon: '🎨', title: 'Repaint Rangka Kayu', desc: 'Cat ulang rangka sofa kayu dengan finishing pilihan.' },
+      { icon: '🔧', title: 'Perbaikan Struktur', desc: 'Perbaikan rangka goyang, dudukan ambrol, atau kaki patah.' },
+    ],
+    tipeTitle: 'Ukuran Sofa',
+    tipeSub: 'Pilih ukuran sofa Anda',
+    tipe: [
+      { label: 'Sofa 1 Seater', price: null },
+      { label: 'Sofa 2 Seater', price: null },
+      { label: 'Sofa 3 Seater', price: null },
+      { label: 'Sofa L-Shape', price: null },
+      { label: 'Lainnya', price: null },
+    ],
+    tipeInfo: null,
+  },
+
+  'Kursi': {
+    headerTitle: 'Konsultasi Kursi',
+    headerSub: 'Ceritakan kondisi kursi Anda, tim kami siap membantu.',
+    keluhanTitle: 'Keluhan / Masalah Kursi',
+    keluhan: [
+      { label: 'Kain / busa dudukan rusak' },
+      { label: 'Cat atau finishing mengelupas' },
+      { label: 'Kaki kursi goyang atau patah' },
+      { label: 'Sandaran tidak kokoh' },
+      { label: 'Lainnya' },
+    ],
+    keluhanInfo: null,
+    layananTitle: 'Pilih Layanan Kursi',
+    layananSub: 'Tambahkan layanan yang Anda butuhkan (opsional)',
+    layanan: [
+      { icon: '🪑', title: 'Re-Upholstery Kursi', desc: 'Ganti kain & busa dudukan / sandaran.' },
+      { icon: '🎨', title: 'Repaint / Refinishing', desc: 'Cat ulang dengan finishing matte, satin, atau gloss.' },
+      { icon: '🔧', title: 'Perbaikan Kaki & Struktur', desc: 'Perkuat atau ganti kaki & sambungan yang longgar.' },
+      { icon: '⚙️', title: 'Custom Modifikasi', desc: 'Tambah bantal, ganti material, atau ubah desain minor.' },
+    ],
+    tipeTitle: 'Tipe Kursi',
+    tipeSub: 'Pilih tipe kursi Anda',
+    tipe: [
+      { label: 'Kursi Makan (per unit)', price: null },
+      { label: 'Kursi Kerja / Office', price: null },
+      { label: 'Kursi Santai / Accent Chair', price: null },
+      { label: 'Kursi Tamu / Wing Chair', price: null },
+      { label: 'Lainnya', price: null },
+    ],
+    tipeInfo: null,
+  },
+
+  'Lemari': {
+    headerTitle: 'Konsultasi Lemari',
+    headerSub: 'Ceritakan kondisi lemari Anda agar kami bisa memberi estimasi yang tepat.',
+    keluhanTitle: 'Keluhan / Masalah Lemari',
+    keluhan: [
+      { label: 'Cat atau finishing mengelupas / pudar' },
+      { label: 'Engsel pintu rusak / tidak menutup rapat' },
+      { label: 'Permukaan tergores atau penyok' },
+      { label: 'Rel laci macet atau rusak' },
+      { label: 'Lainnya' },
+    ],
+    keluhanInfo: null,
+    layananTitle: 'Pilih Layanan Lemari',
+    layananSub: 'Tambahkan layanan yang Anda butuhkan (opsional)',
+    layanan: [
+      { icon: '🎨', title: 'Repaint / Refinishing', desc: 'Cat ulang dengan finishing duco matte, satin, atau HPL.' },
+      { icon: '🔧', title: 'Perbaikan Engsel & Rel', desc: 'Ganti atau setel ulang engsel pintu dan rel laci.' },
+      { icon: '🪵', title: 'Penggantian Material', desc: 'Ganti back panel, rak, atau pintu yang rusak.' },
+      { icon: '⚙️', title: 'Custom Modifikasi', desc: 'Tambah rak, kaca pintu, atau ubah dimensi.' },
+    ],
+    tipeTitle: 'Tipe Lemari',
+    tipeSub: 'Pilih tipe lemari Anda',
+    tipe: [
+      { label: 'Lemari 2 Pintu', price: null },
+      { label: 'Lemari 3 Pintu', price: null },
+      { label: 'Lemari Sliding', price: null },
+      { label: 'Lemari Built-in / Tanam', price: null },
+      { label: 'Lainnya', price: null },
+    ],
+    tipeInfo: null,
+  },
+
+  'Kitchen Set Refurbish': {
+    headerTitle: 'Konsultasi Kitchen Set',
+    headerSub: 'Ceritakan kondisi kitchen set Anda untuk estimasi yang akurat.',
+    keluhanTitle: 'Keluhan / Masalah Kitchen Set',
+    keluhan: [
+      { label: 'Cat atau HPL mengelupas / menggelembung' },
+      { label: 'Engsel pintu lemah atau rusak' },
+      { label: 'Rel laci macet' },
+      { label: 'Permukaan meja dapur tergores atau rusak' },
+      { label: 'Lainnya' },
+    ],
+    keluhanInfo: null,
+    layananTitle: 'Pilih Layanan Kitchen Set',
+    layananSub: 'Tambahkan layanan yang Anda butuhkan (opsional)',
+    layanan: [
+      { icon: '🎨', title: 'Repaint / Refinishing', desc: 'Cat ulang kabinet dapur dengan finishing tahan lama.' },
+      { icon: '🪵', title: 'Ganti HPL / Material', desc: 'Penggantian lapisan HPL atau material permukaan.' },
+      { icon: '🔧', title: 'Perbaikan Engsel & Rel', desc: 'Ganti atau setel engsel pintu dan rel laci dapur.' },
+      { icon: '⚙️', title: 'Custom Modifikasi', desc: 'Tambah rak, laci, atau ubah tata letak.' },
+    ],
+    tipeTitle: 'Bagian Kitchen Set',
+    tipeSub: 'Pilih bagian yang ingin direfurbish',
+    tipe: [
+      { label: 'Kabinet Bawah', price: null },
+      { label: 'Kabinet Atas', price: null },
+      { label: 'Full Set (Atas + Bawah)', price: null },
+      { label: 'Meja Dapur / Countertop', price: null },
+      { label: 'Lainnya', price: null },
+    ],
+    tipeInfo: null,
+  },
+
+  'Dining Set': {
+    headerTitle: 'Konsultasi Dining Set',
+    headerSub: 'Ceritakan kondisi meja dan kursi makan Anda untuk estimasi yang tepat.',
+    keluhanTitle: 'Keluhan / Masalah Dining Set',
+    keluhan: [
+      { label: 'Kain / busa kursi makan rusak' },
+      { label: 'Cat meja atau kursi mengelupas' },
+      { label: 'Kaki meja / kursi goyang' },
+      { label: 'Permukaan meja tergores' },
+      { label: 'Lainnya' },
+    ],
+    keluhanInfo: null,
+    layananTitle: 'Pilih Layanan Dining Set',
+    layananSub: 'Tambahkan layanan yang Anda butuhkan (opsional)',
+    layanan: [
+      { icon: '🛋️', title: 'Re-Upholstery Kursi Makan', desc: 'Ganti kain & busa dudukan kursi makan.' },
+      { icon: '🎨', title: 'Repaint Meja Makan', desc: 'Cat ulang permukaan meja dengan finishing pilihan.' },
+      { icon: '🎨', title: 'Repaint Kursi Makan', desc: 'Cat ulang rangka kursi makan.' },
+      { icon: '🔧', title: 'Perbaikan Struktur', desc: 'Perkuat kaki atau sambungan yang longgar.' },
+    ],
+    tipeTitle: 'Jumlah Kursi',
+    tipeSub: 'Pilih kapasitas dining set Anda',
+    tipe: [
+      { label: '4 Kursi', price: null },
+      { label: '6 Kursi', price: null },
+      { label: '8 Kursi', price: null },
+      { label: 'Lainnya', price: null },
+    ],
+    tipeInfo: null,
+  },
+
+  'Meja TV / Credenza': {
+    headerTitle: 'Konsultasi Meja TV / Credenza',
+    headerSub: 'Ceritakan kondisi meja TV atau credenza Anda untuk estimasi yang akurat.',
+    keluhanTitle: 'Keluhan / Masalah Meja TV / Credenza',
+    keluhan: [
+      { label: 'Cat atau HPL mengelupas / pudar' },
+      { label: 'Pintu atau engsel tidak berfungsi dengan baik' },
+      { label: 'Permukaan tergores atau rusak' },
+      { label: 'Ingin ganti warna / tampilan' },
+      { label: 'Lainnya' },
+    ],
+    keluhanInfo: null,
+    layananTitle: 'Pilih Layanan Meja TV / Credenza',
+    layananSub: 'Tambahkan layanan yang Anda butuhkan (opsional)',
+    layanan: [
+      { icon: '🎨', title: 'Repaint / Refinishing', desc: 'Cat ulang dengan finishing matte, satin, atau HPL.' },
+      { icon: '🪵', title: 'Ganti HPL / Material', desc: 'Penggantian lapisan HPL atau veneer.' },
+      { icon: '🔧', title: 'Perbaikan Engsel', desc: 'Ganti atau setel ulang engsel pintu.' },
+      { icon: '⚙️', title: 'Custom Modifikasi', desc: 'Tambah laci, cable management, atau ubah dimensi.' },
+    ],
+    tipeTitle: 'Tipe Unit',
+    tipeSub: 'Pilih tipe unit Anda',
+    tipe: [
+      { label: 'Meja TV Minimalis', price: null },
+      { label: 'Credenza / Buffet', price: null },
+      { label: 'Floating TV Unit', price: null },
+      { label: 'Lainnya', price: null },
+    ],
+    tipeInfo: null,
+  },
+
+  'Custom Furniture': {
+    headerTitle: 'Konsultasi Custom Furniture',
+    headerSub: 'Ceritakan kebutuhan custom furnitur Anda, kami siap wujudkan.',
+    keluhanTitle: 'Apa yang Anda Butuhkan?',
+    keluhan: [
+      { label: 'Desain ulang furnitur lama' },
+      { label: 'Modifikasi ukuran' },
+      { label: 'Tambah komponen (rak, laci, dll)' },
+      { label: 'Ganti material atau finishing' },
+      { label: 'Lainnya' },
+    ],
+    keluhanInfo: null,
+    layananTitle: 'Pilih Layanan Custom',
+    layananSub: 'Tambahkan layanan yang Anda butuhkan (opsional)',
+    layanan: [
+      { icon: '✏️', title: 'Custom Design', desc: 'Desain furnitur baru dari awal sesuai kebutuhan.' },
+      { icon: '⚙️', title: 'Modifikasi Struktur', desc: 'Ubah dimensi, tambah/kurangi bagian dari furnitur yang ada.' },
+      { icon: '🎨', title: 'Finishing Custom', desc: 'Finishing unik: cat khusus, staining, atau natural wood.' },
+      { icon: '🪵', title: 'Penambahan Komponen', desc: 'Tambah rak, laci, kaki, atau detail dekoratif.' },
+    ],
+    tipeTitle: 'Jenis Furnitur',
+    tipeSub: 'Pilih jenis furnitur yang akan dikustomisasi',
+    tipe: [
+      { label: 'Sofa / Kursi', price: null },
+      { label: 'Lemari / Rak', price: null },
+      { label: 'Meja', price: null },
+      { label: 'Kabinet / Storage', price: null },
+      { label: 'Lainnya', price: null },
+    ],
+    tipeInfo: null,
+  },
+
+  'Service AC': {
+    headerTitle: 'Konsultasi Service AC',
+    headerSub: 'Ceritakan kondisi AC Anda, tim kami siap membantu estimasi dan jadwal servis.',
+    keluhanTitle: 'Keluhan / Masalah AC',
+    keluhan: [
+      { label: 'AC tidak dingin' },
+      { label: 'Bongkar / pasang AC' },
+      { label: 'AC bocor' },
+      { label: 'AC rusak' },
+      { label: 'Lainnya' },
+    ],
+    keluhanInfo: '* Garansi tidak berlaku untuk layanan cuci AC &amp; jasa pengecekan.',
+    layananTitle: 'Pilih Layanan Service AC',
+    layananSub: 'Tambahkan layanan yang Anda butuhkan (opsional)',
+    layanan: [
+      { icon: '🧹', title: 'Cuci', desc: 'Layanan cuci AC.' },
+      { icon: '🔧', title: 'Perbaikan', desc: 'Layanan perbaikan AC.' },
+      { icon: '❄️', title: 'Freon', desc: 'Tambah Freon: dari tekanan setengah penuh ke penuh. Isi Freon: dari tekanan kosong – setengah penuh ke penuh.' },
+      { icon: '⚙️', title: 'Instalasi', desc: 'Jasa instalasi bongkar pasang AC.' },
+    ],
+    tipeTitle: 'Jenis Properti Anda?',
+    tipeSub: 'Pilih jenis properti tempat AC dipasang',
+    tipe: [
+      { label: 'Rumah',     price: 0 },
+      { label: 'Apartemen', price: 20000, oldPrice: 30000 },
+      { label: 'Lainnya',   price: 0 },
+    ],
+    tipeInfo: 'Untuk pemesanan unit apartemen, mohon siapkan surat izin dari pihak gedung sebelum waktu pengerjaan.',
+  },
+
+  // Default — shown if no category matches (e.g. "Lainnya")
+  '_default': {
+    headerTitle: 'Form Konsultasi &amp; Estimasi',
+    headerSub: 'Jawab beberapa pertanyaan singkat, tim kami akan merespons lewat WhatsApp.',
+    keluhanTitle: 'Apa Kebutuhan Anda?',
+    keluhan: [
+      { label: 'Perlu dicat ulang / refinishing' },
+      { label: 'Perlu ganti kain atau busa' },
+      { label: 'Perlu perbaikan struktur' },
+      { label: 'Custom modifikasi / desain ulang' },
+      { label: 'Hanya konsultasi & cek kondisi' },
+      { label: 'Lainnya' },
+    ],
+    keluhanInfo: 'Belum yakin? Pilih "Hanya konsultasi & cek kondisi" — tim kami akan bantu menentukan solusi terbaik.',
+    layananTitle: 'Layanan yang Anda Butuhkan',
+    layananSub: 'Tambahkan layanan spesifik (opsional)',
+    layanan: [
+      { icon: '🔧', title: 'Refurnish Kayu', desc: 'Repaint duco, repair, penggantian material, perbaikan struktur.' },
+      { icon: '🛋️', title: 'Re-Upholstery', desc: 'Ganti kain & busa untuk sofa, kursi makan, headboard.' },
+      { icon: '🎨', title: 'Repaint / Refinishing', desc: 'Finishing matte, satin, gloss, atau natural wood.' },
+      { icon: '⚙️', title: 'Custom Modifikasi', desc: 'Tambah rak, pemendekan, ganti kaki, redesign minor.' },
+    ],
+    tipeTitle: 'Jenis Furnitur',
+    tipeSub: 'Pilih jenis furnitur Anda',
+    tipe: [
+      { label: 'Sofa' },
+      { label: 'Kursi' },
+      { label: 'Lemari' },
+      { label: 'Meja TV / Credenza' },
+      { label: 'Dining Set' },
+      { label: 'Kitchen Set' },
+      { label: 'Lainnya' },
+    ],
+    tipeInfo: null,
+  },
+};
+
+// ─────────────────────────────────────────────────────────────────
+// RENDER FUNCTIONS
+// ─────────────────────────────────────────────────────────────────
+function buildKeluhanList(keluhan, containerId) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = keluhan.map(k => `
+        <label class="option-row">
+            <span class="option-label">${k.label}</span>
+            <input type="checkbox" name="keluhan" value="${k.label}">
+        </label>`).join('');
+}
+
+function buildLayananList(layanan, containerId) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = layanan.map(s => `
+        <div class="service-row" data-service="${s.title}">
+            <div class="service-icon-box">${s.icon}</div>
+            <div class="service-meta">
+                <div class="service-meta-title">${s.title}</div>
+                <div class="service-meta-desc">${s.desc}</div>
+            </div>
+            <button type="button" class="service-add-btn">+ Tambah</button>
+        </div>`).join('');
+
+    el.querySelectorAll('.service-add-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('added');
+            btn.textContent = btn.classList.contains('added') ? '✓ Ditambahkan' : '+ Tambah';
+            updateCount();
+        });
+    });
+}
+
+function buildTipeList(tipe, containerId) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = tipe.map(t => {
+        let priceHtml = '';
+        if (t.price !== undefined && t.price !== null) {
+            if (t.oldPrice) {
+                priceHtml = `<span class="option-price"><s>Rp${t.oldPrice.toLocaleString('id-ID')}</s> <strong>Rp${t.price.toLocaleString('id-ID')}</strong></span>`;
+            } else {
+                priceHtml = `<span class="option-price">Rp${t.price.toLocaleString('id-ID')}</span>`;
+            }
+        }
+        return `<label class="option-row">
+            <span class="option-label">${t.label}</span>
+            ${priceHtml}
+            <input type="radio" name="tipe" value="${t.label}">
+        </label>`;
+    }).join('');
+}
+
+function setText(id, html) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+}
+
+function setInfoBox(containerId, text, warn) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    if (text) {
+        el.innerHTML = `<div class="info-box${warn?' warn':''}">${text}</div>`;
+    } else {
+        el.innerHTML = '';
+    }
+}
+
+function updateCount() {
+    const checked = document.querySelectorAll('input[name="keluhan"]:checked').length +
+                    document.querySelectorAll('input[name="tipe"]:checked').length +
+                    document.querySelectorAll('.service-add-btn.added').length;
+    document.getElementById('selectionCount').textContent = checked + ' dipilih';
+}
+
+function getTodayInputValue() {
+    const now = new Date();
+    const timezoneOffset = now.getTimezoneOffset() * 60000;
+    return new Date(now.getTime() - timezoneOffset).toISOString().slice(0, 10);
+}
+
+function isWithinServiceHours(timeValue) {
+    return !timeValue || (timeValue >= '08:00' && timeValue <= '17:00');
+}
+
+// ─────────────────────────────────────────────────────────────────
+// INIT — read URL params and apply config
+// ─────────────────────────────────────────────────────────────────
+(function(){
+    const params = new URLSearchParams(window.location.search);
+    const layananParam = params.get('layanan') || '';
+    const lokasiParam  = params.get('lokasi')  || '';
+
+    const config = CATEGORY_CONFIG[layananParam] || CATEGORY_CONFIG['_default'];
+
+    // Header
+    document.getElementById('headerPill').textContent = layananParam || 'Semua Layanan';
+    setText('headerTitle', config.headerTitle);
+    setText('headerSub',   config.headerSub);
+
+    // Keluhan
+    setText('keluhanTitle', config.keluhanTitle + ' <span class="req">*</span>');
+    buildKeluhanList(config.keluhan, 'keluhanList');
+    setInfoBox('keluhanInfo', config.keluhanInfo);
+
+    // Layanan
+    setText('layananTitle', config.layananTitle);
+    setText('layananSub',   config.layananSub);
+    buildLayananList(config.layanan, 'layananList');
+
+    // Tipe
+    setText('tipeTitle', config.tipeTitle + ' <span class="req">*</span>');
+    setText('tipeSub',   config.tipeSub);
+    buildTipeList(config.tipe, 'tipeList');
+    setInfoBox('tipeInfo', config.tipeInfo);
+
+    // Pre-fill lokasi
+    if (lokasiParam) {
+        const sel = document.getElementById('formLokasi');
+        if (sel) sel.value = lokasiParam;
+    }
+
+    const tanggalEl = document.getElementById('formTanggal');
+    const waktuEl = document.getElementById('formWaktu');
+    const hpInputEl = document.getElementById('formHp');
+    const todayValue = getTodayInputValue();
+
+    if (tanggalEl) {
+        tanggalEl.min = todayValue;
+        tanggalEl.addEventListener('change', function(){
+            if (tanggalEl.value && tanggalEl.value < todayValue) {
+                tanggalEl.value = todayValue;
+            }
+        });
+    }
+    if (waktuEl) {
+        waktuEl.addEventListener('change', function(){
+            if (!isWithinServiceHours(waktuEl.value)) {
+                alert('Pilih pukul antara 08:00 sampai 17:00.');
+                waktuEl.value = '';
+            }
+        });
+    }
+    if (hpInputEl) {
+        hpInputEl.addEventListener('input', function(){
+            hpInputEl.value = hpInputEl.value.replace(/\D/g, '').slice(0, 15);
+        });
+    }
+
+    // Live count
+    document.getElementById('keluhanList').addEventListener('change', updateCount);
+    document.getElementById('tipeList').addEventListener('change', updateCount);
+    updateCount();
+
+    // Submit
+    document.getElementById('requestForm').addEventListener('submit', function(e){
+        e.preventDefault();
+
+        const keluhanVals = Array.from(document.querySelectorAll('input[name="keluhan"]:checked')).map(i => i.value);
+        const tipeEl      = document.querySelector('input[name="tipe"]:checked');
+        const lokasiEl    = document.getElementById('formLokasi');
+        const namaEl      = document.getElementById('formNama');
+        const hpEl        = document.getElementById('formHp');
+
+        const missing = [];
+        if (!keluhanVals.length) missing.push(config.keluhanTitle.replace(/<[^>]+>/g,''));
+        if (!tipeEl)             missing.push(config.tipeTitle);
+        if (!lokasiEl.value)     missing.push('Lokasi');
+        if (!namaEl.value.trim()) missing.push('Nama Lengkap');
+        if (!hpEl.value.trim())   missing.push('No. WhatsApp');
+
+        if (missing.length) { alert('Mohon lengkapi: ' + missing.join(', ')); return; }
+
+        const layananChips = Array.from(document.querySelectorAll('.service-add-btn.added'))
+            .map(b => b.closest('.service-row').getAttribute('data-service'));
+        const tanggal  = document.getElementById('formTanggal').value;
+        const waktu    = document.getElementById('formWaktu').value;
+        const catatan  = document.getElementById('formCatatan').value.trim();
+
+        let msg = `Halo homesolution.id! Saya ${namaEl.value.trim()} ingin konsultasi.\n\n`;
+        msg += `Kategori: ${layananParam || 'Umum'}\n`;
+        msg += `Keluhan/Kebutuhan: ${keluhanVals.join(', ')}\n`;
+        if (layananChips.length) msg += `Layanan dipilih: ${layananChips.join(', ')}\n`;
+        msg += `${config.tipeTitle.replace(/<[^>]+>/g,'')}: ${tipeEl.value}\n`;
+        msg += `Lokasi: ${lokasiEl.value}\n`;
+        if (tanggal) msg += `Jadwal: ${tanggal}${waktu ? ' pukul '+waktu : ''}\n`;
+        msg += `No. WhatsApp: ${hpEl.value.trim()}\n`;
+        if (catatan) msg += `Catatan: ${catatan}\n`;
+
+        window.location.href = `https://wa.me/6282130001889?text=${encodeURIComponent(msg)}`;
+    });
+})();
+</script>
+</body>
+</html>
