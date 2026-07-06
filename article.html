@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Article — Refurnish Studio</title>
+<title>Article — homesolution.id</title>
 <link rel="stylesheet" href="css/responsive.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
     --text:#0b0b0b;
@@ -18,7 +18,7 @@
 }
 html,body{height:100%;}
 body {
-    font-family: "Inter", Arial, sans-serif;
+    font-family: "Poppins", Arial, sans-serif;
     margin:0;
     padding:0;
     color:var(--text);
@@ -49,7 +49,7 @@ body {
     z-index: 9999;
     padding: .6rem 0;
 }
-.navbar-brand{ font-family: "Playfair Display", serif; font-weight:700; color:var(--text); letter-spacing: -0.5px; font-size:1.1rem;}
+.navbar-brand{ font-family: "Poppins", sans-serif; font-weight:700; color:var(--text); letter-spacing: -0.5px; font-size:1.1rem;}
 .nav-link{ color:var(--text) !important; font-weight:600; padding: .6rem 1rem; }
 .nav-link{ position:relative; overflow:visible; }
 .nav-link::after{
@@ -86,7 +86,7 @@ body {
 .parallax-hero{ background-image:url('images/hero.jpg'); background-size:cover; background-position:center; min-height:38vh; display:flex; align-items:center; position:relative; }
 .parallax-hero::before{ content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.35) 90%, rgba(0,0,0,0) 100%); z-index:1; }
 .page-header{ position:relative; z-index:2; padding:4rem 0; color:#000000; }
-.page-title{ font-family:"Playfair Display", serif; font-size: clamp(28px, 6vw, 56px); margin:0; }
+.page-title{ font-family:"Poppins", sans-serif; font-size: clamp(28px, 6vw, 56px); margin:0; }
 .page-sub{ color:rgba(0, 0, 0, 0.9); max-width:780px; }
 
 .hero-intro p{ color:var(--text); font-size:1.05rem; margin-bottom:1.25rem; }
@@ -115,25 +115,25 @@ body {
 
 /* Keep original about/services/process/portfolio styles (if present) */
 .about-section { background:#fff; color:#000; padding:6rem 0; }
-.about-hero { font-family: "Playfair Display", serif; font-weight:800; font-size: clamp(48px, 12vw, 50px); margin:0; letter-spacing:-2px; }
+.about-hero { font-family: "Poppins", sans-serif; font-weight:800; font-size: clamp(48px, 12vw, 50px); margin:0; letter-spacing:-2px; }
 .about-hero small { font-size: .35em; opacity:.8; vertical-align:super; margin-left:.25rem; }
 .about-desc { color:rgba(7, 7, 7, 0.75); max-width:520px; margin-left:0; margin-top:.35rem; text-align:left; }
 
 /* ARTICLE-specific styles */
 .article-meta { text-transform:uppercase; letter-spacing:2px; font-size:.78rem; color:var(--muted); margin-bottom:.6rem; font-weight:700; }
-.article-title { font-family:"Playfair Display", serif; font-weight:700; font-size: clamp(28px, 5.5vw, 42px); margin: 0 0 12px 0; text-align:center; }
+.article-title { font-family:"Poppins", sans-serif; font-weight:700; font-size: clamp(28px, 5.5vw, 42px); margin: 0 0 12px 0; text-align:center; }
 .article-lead { color:rgba(0,0,0,0.7); text-align:center; max-width:880px; margin:0 auto 22px auto; font-size:1.05rem; }
 .article-hero-img { width:100%; height:420px; object-fit:cover; display:block; margin:0 auto; }
 
 .article-container { padding:3.5rem 0 6rem 0; }
 .article-content { font-size:1rem; color:rgba(12,12,12,0.9); line-height:1.85; }
-.article-content h3 { font-family:"Playfair Display", serif; font-weight:700; margin-top:1.6rem; margin-bottom:.6rem; }
+.article-content h3 { font-family:"Poppins", sans-serif; font-weight:700; margin-top:1.6rem; margin-bottom:.6rem; }
 .article-content p { margin-bottom:1rem; color:rgba(12,12,12,0.9); }
 
 /* Contact layout */
         .contact-section { padding: 5rem 0; }
         .contact-left { padding-right: 3rem; }
-        .contact-left h2 { font-family: "Playfair Display", serif; font-weight:800; font-size:2rem; letter-spacing:1px; }
+        .contact-left h2 { font-family: "Poppins", sans-serif; font-weight:800; font-size:2rem; letter-spacing:1px; }
         .contact-sub { color:var(--muted); margin-bottom:1.25rem; font-size:1.05rem; }
         .contact-group h5 { font-weight:700; margin-top:1.25rem; margin-bottom:.5rem; }
         .contact-group p { margin:0 0 .6rem 0; color:var(--text); }
@@ -169,12 +169,34 @@ body {
     .parallax-hero { min-height:60vh; }
     .navbar{ position:fixed; }
 }
+
+        /* Shared theme: white menu on transparent hero, dark after scroll */
+        .navbar:not(.scrolled) .nav-link{ color:#fff !important; }
+        .navbar:not(.scrolled) .nav-link::after{ background:#fff; }
+        .navbar.scrolled .nav-link{ color:var(--text) !important; }
+        .navbar.scrolled .nav-link::after{ background:var(--text); }
+        .navbar:not(.scrolled) .navbar-toggler{ border-color:rgba(255,255,255,.55); }
+        .navbar.scrolled .navbar-toggler{ border-color:rgba(0,0,0,.15); }
+
+        /* Shared inner-page hero: brown theme, no photo background */
+        .parallax-hero{
+            background:#4A403A !important;
+            background-image:none !important;
+            min-height:38vh;
+            color:#fff;
+        }
+        .parallax-hero::before{
+            background:linear-gradient(180deg, rgba(47,39,34,.14) 0%, rgba(47,39,34,.34) 100%) !important;
+        }
+        .page-header{ color:#fff !important; }
+        .page-title{ font-family:"Poppins", sans-serif !important; font-weight:700; color:#fff; }
+        .page-sub{ color:rgba(255,255,255,.86) !important; }
 </style>
 </head>
 <body>
    <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html" data-aos="fade-down"><img src="images/logo.png" alt="Refurnish Studio" style="height: 2.1rem;"></a>
+            <a class="navbar-brand" href="index.html" data-aos="fade-down"><img src="images/logo.png" alt="homesolution.id" style="height: 2.1rem;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -290,7 +312,7 @@ body {
                     <div class="contact-group">
                         <h5>Get In Touch</h5>
                         <p>082130001889</p>
-                        <p>Instagram: refurnish.studio</p>
+                        <p>Instagram: homesolution.id</p>
                     </div>
 
                     <div class="contact-group">
@@ -315,9 +337,9 @@ body {
 
 <footer class="bg-dark text-white text-center py-4">
         <div class="container">
-            <p>&copy; 2025 Refurnish Studio. All rights reserved.</p>
+            <p>&copy; 2025 homesolution.id. All rights reserved.</p>
             <div>
-                <a href="https://www.instagram.com/refurnish.studio/?utm_source=ig_web_button_share_sheet" class="text-white me-3">Instagram</a>
+                <a href="https://www.instagram.com/homesolution.id/?utm_source=ig_web_button_share_sheet" class="text-white me-3">Instagram</a>
             </div>
         </div>
     </footer>
