@@ -3,25 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Refurnish Studio - Home</title>
+    <title>homesolution.id - Home</title>
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/mobile-spacing.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <!-- Changed: add fonts + refined minimalist styles -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root{
             --text:#0b0b0b;
             --muted:#636363;
             --accent:#000;
+            --accent-green:#085F5E;
+            --accent-green-dark:#064a49;
+            --accent-red:#C33B04;
+            --theme-brown:#4A403A;
+            --theme-brown-dark:#2f2722;
+            --theme-brown-mid:#7B5F4A;
+            --theme-cream:#F7F0E7;
+            --theme-cream-soft:#FBF7F1;
             --space: clamp(18px, 2.5vw, 40px);
             --container-pad: 6rem;
         }
         html,body{height:100%;}
         body {
-            font-family: "Inter", Arial, sans-serif;
+            font-family: "Poppins", Arial, sans-serif;
             margin:0;
             padding:0;
             color:var(--text);
@@ -53,7 +61,7 @@
             z-index: 9999;
             padding: .6rem 0;
         }
-        .navbar-brand{ font-family: "Playfair Display", serif; font-weight:700; color:var(--text); letter-spacing: -0.5px; font-size:1.1rem;}
+        .navbar-brand{ font-family: "Poppins", sans-serif; font-weight:700; color:var(--text); letter-spacing: -0.5px; font-size:1.1rem;}
         .nav-link{ color:var(--text) !important; font-weight:600; padding: .6rem 1rem; }
         /* underline animation on hover / active */
         .nav-link{ position:relative; overflow:visible; }
@@ -75,36 +83,101 @@
             opacity: 1;
         }
 
-        /* HERO - left aligned, big typographic scale */
+        /* HERO - compact marketplace-style search */
         .parallax-hero {
-            /* Use local hero image for reliable loading */
-            background-image: url('images/hero.jpg');
-            background-repeat: no-repeat;
-            background-color: #f5f5f5; /* fallback color while image loads */
-            background-size: cover;
-            background-position: center;
-            min-height: 80vh;
+            background: var(--theme-brown);
+            min-height: 520px;
             display:flex;
             align-items:center;
-            color:var(--text);
+            color:#fff;
             position:relative;
         }
-        .parallax-hero::before{ content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.35) 90%, rgba(0,0,0,0) 100%); z-index:1; }
-        .parallax-hero > .container { position:relative; z-index:2; padding-top: calc(var(--container-pad) + 2rem); padding-bottom: var(--container-pad); }
-        .hero-intro { max-width:760px; text-align:left; }
+        .parallax-hero::before{ content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.22) 100%); z-index:1; }
+        .parallax-hero > .container { position:relative; z-index:2; padding-top:7rem; padding-bottom:4.25rem; }
+        .hero-intro { max-width:900px; margin:0 auto; text-align:center; }
         .hero-intro h1{
-            font-family:"Playfair Display", serif;
+            font-family:"Poppins", sans-serif;
             font-weight:700;
-            font-size: clamp(34px, 8vw, 72px);
-            margin:0 0 0.6rem;
-            line-height:1.02;
-            color:var(--text);
+            font-size: clamp(28px, 4.2vw, 46px);
+            margin:0 0 0.55rem;
+            line-height:1.18;
+            color:#fff;
         }
-        .hero-intro p{ color:var(--text); font-size:1.05rem; margin-bottom:1.25rem; }
-        .hero-intro .lead{ color:var(--text); font-size:1.05rem; margin-bottom:0.8rem; }
-        .feature-list{ margin-top:1rem; color:var(--text); font-size:0.95rem; display:flex; gap:1.25rem; flex-wrap:wrap; list-style:none; padding:0; }
+        .hero-intro p{ color:#fff; font-size:.95rem; margin-bottom:1rem; }
+        .hero-intro .lead{ color:rgba(255,255,255,0.9); font-size:.95rem; margin-bottom:.9rem; }
+        .feature-list{ margin-top:1rem; color:var(--text); font-size:0.95rem; display:flex; gap:1.25rem; flex-wrap:wrap; list-style:none; padding:0; justify-content:center; }
         .feature-list li{ display:flex; align-items:center; background: rgba(255,255,255,0.9); padding:6px 10px; border-radius:6px; box-shadow: 0 2px 6px rgba(10,10,10,0.03); }
         .feature-list li::before{ content:'•'; margin-right:8px; color:var(--text); font-weight:700; }
+
+        /* Hero eyebrow badge - small red accent, used sparingly */
+        .hero-badge{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            background:#fff;
+            color:var(--accent-red);
+            font-size:.76rem;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:.6px;
+            padding:7px 14px;
+            border-radius:999px;
+            box-shadow:0 2px 8px rgba(10,10,10,0.06);
+            margin-bottom:1.1rem;
+        }
+        .hero-badge::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--accent-red); flex:0 0 7px; }
+
+        /* Hero search/inquiry card - inspired by marketplace search bars, adapted for a single workshop */
+        .hero-search{
+            background:var(--theme-cream);
+            border-radius:4px;
+            border:1px solid rgba(74,64,58,.22);
+            box-shadow:0 14px 30px rgba(47,39,34,0.18);
+            padding:.85rem;
+            margin:2rem auto 0;
+            max-width:860px;
+        }
+        .hero-search-grid{ display:flex; gap:.75rem; flex-wrap:wrap; align-items:flex-end; justify-content:center; }
+        .hero-search-field{ flex:1 1 220px; display:flex; flex-direction:column; gap:.25rem; text-align:left; }
+        .hero-search-field label{ font-size:.78rem; font-weight:700; letter-spacing:0; color:var(--theme-brown-mid); }
+        .hero-search-field select, .hero-search-field input{
+            border:1px solid rgba(74,64,58,.2);
+            background:#fff;
+            border-radius:4px;
+            padding:9px 10px;
+            font-family:"Poppins",Arial,sans-serif;
+            font-size:.9rem;
+            color:var(--theme-brown-dark);
+            width:100%;
+        }
+        .hero-search-field select:focus, .hero-search-field input:focus{
+            outline:none;
+            border-color:var(--theme-brown-mid);
+            box-shadow:0 0 0 3px rgba(123,95,74,0.16);
+        }
+        .hero-search-submit{
+            flex:0 0 auto;
+            background:var(--theme-brown);
+            color:#fff;
+            border:none;
+            border-radius:4px;
+            padding:11px 22px;
+            font-weight:700;
+            font-size:.82rem;
+            text-transform:uppercase;
+            letter-spacing:.6px;
+            cursor:pointer;
+            transition:background .18s ease, transform .08s ease;
+            white-space:nowrap;
+        }
+        .hero-search-submit:hover{ background:var(--theme-brown-dark); transform:translateY(-1px); }
+        .hero-search-submit:focus-visible{ outline:3px solid rgba(123,95,74,0.36); outline-offset:2px; }
+        .hero-search-note{ margin-top:.65rem; margin-bottom:0; font-size:.8rem; color:var(--muted); text-align:center; }
+        .hero-search-note a{ color:var(--text); font-weight:600; }
+        @media (max-width:576px){
+            .hero-search{ padding:1rem; }
+            .hero-search-submit{ width:100%; }
+        }
 
         /* Button - minimal outlined */
         .btn-custom {
@@ -120,13 +193,67 @@
         }
         .btn-custom:hover{ background:var(--text); color:#fff; transform:translateY(-1px); }
 
+        /* Kategori Terpopuler - compact marketplace-style panel with photo slider */
+        .category-section{ padding:3rem 0 1.25rem; background:#fff; }
+        .category-showcase{ display:grid; grid-template-columns:minmax(0, 1.45fr) minmax(360px, 1fr); gap:1.5rem; align-items:start; }
+        .promo-head, .category-head{ display:flex; align-items:center; justify-content:space-between; min-height:30px; margin-bottom:.45rem; gap:1rem; }
+        .promo-heading, .category-heading{ font-family:"Poppins", sans-serif; font-weight:700; font-size:1.25rem; margin:0; letter-spacing:-.35px; }
+        .category-viewall{ color:var(--theme-brown-mid); font-weight:700; font-size:1rem; text-decoration:none; white-space:nowrap; }
+        .category-viewall:hover{ color:var(--theme-brown-dark); }
+        .promo-carousel{ position:relative; overflow:hidden; border-radius:0; background:#f4f4f4; }
+        .promo-carousel .carousel-item{ height:250px; }
+        .promo-carousel img{ width:100%; height:100%; object-fit:cover; display:block; }
+        .promo-overlay{
+            position:absolute; inset:auto 0 0 0; z-index:2;
+            padding:2.5rem 1.4rem 1.25rem;
+            color:#fff;
+            background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 100%);
+            pointer-events:none;
+        }
+        .promo-kicker{ display:block; font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.2rem; }
+        .promo-title{ font-size:clamp(1.35rem, 3vw, 2.15rem); line-height:1.05; font-weight:800; margin:0; max-width:560px; }
+        .promo-carousel .carousel-control-prev, .promo-carousel .carousel-control-next{
+            width:36px; height:36px; top:50%; transform:translateY(-50%);
+            border-radius:50%; background:rgba(255,255,255,.68); opacity:1;
+        }
+        .promo-carousel .carousel-control-prev{ left:1rem; }
+        .promo-carousel .carousel-control-next{ right:1rem; }
+        .promo-carousel .carousel-control-prev-icon, .promo-carousel .carousel-control-next-icon{ width:1rem; height:1rem; filter:invert(1) grayscale(1); }
+        .category-panel{ border:1px solid rgba(74,64,58,.16); box-shadow:0 2px 7px rgba(47,39,34,.08); background:#fff; min-height:250px; }
+        .category-grid{ display:grid; grid-template-columns:repeat(3, 1fr); }
+        .category-card{
+            min-height:124px;
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            gap:.65rem; text-align:center; text-decoration:none; color:var(--theme-brown-mid);
+            background:#fff; border:0; padding:1rem .75rem;
+            transition:background .18s ease, color .18s ease, transform .18s ease;
+        }
+        .category-card:hover, .category-card:focus-visible{ background:var(--theme-cream-soft); color:var(--theme-brown-dark); transform:translateY(-2px); outline:none; }
+        .category-icon{ width:60px; height:54px; display:flex; align-items:center; justify-content:center; color:var(--theme-brown); }
+        .category-icon svg{ width:58px; height:50px; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+        .category-card:nth-child(2) .category-icon, .category-card:nth-child(5) .category-icon{ color:var(--theme-brown-mid); }
+        .category-card:nth-child(3) .category-icon, .category-card:nth-child(4) .category-icon{ color:#9B806B; }
+        .category-card:nth-child(6) .category-icon{ color:var(--theme-brown-dark); }
+        .category-label{ font-weight:400; font-size:.9rem; line-height:1.25; }
+        @media (max-width:992px){
+            .category-showcase{ grid-template-columns:1fr; }
+            .category-panel{ min-height:auto; }
+        }
+        @media (max-width:576px){
+            .category-section{ padding-top:2rem; }
+            .promo-head, .category-head{ margin-bottom:.65rem; }
+            .promo-carousel .carousel-item{ height:220px; }
+            .category-grid{ grid-template-columns:repeat(2, 1fr); }
+            .category-card{ min-height:112px; }
+        }
+
         /* Sections - more whitespace, remove heavy overlays */
         .parallax-section { background-size:cover; background-position:center; min-height:60vh; display:flex; align-items:center; position:relative; }
         .parallax-section::before{ display:none; } /* keep imagery clean */
 
          /* About us layout - large left heading with right-side list */
         .about-section { background:#fff; color:#000; padding:6rem 0; }
-        .about-hero { font-family: "Playfair Display", serif; font-weight:800; font-size: clamp(48px, 12vw, 50px); margin:0; letter-spacing:-2px; }
+        .about-hero { font-family: "Poppins", sans-serif; font-weight:800; font-size: clamp(48px, 12vw, 50px); margin:0; letter-spacing:-2px; }
         .about-hero small { font-size: .35em; opacity:.8; vertical-align:super; margin-left:.25rem; }
         .about-desc { color:rgba(7, 7, 7, 0.75); max-width:520px; margin-left:0; margin-top:.5rem; text-align:justify; }
         /* mobile adjustments */
@@ -137,7 +264,7 @@
 
         /* Services layout - large left heading with right-side list */
         .services-section { background:#fff; color:#000; padding:6rem 0; }
-        .services-hero { font-family: "Playfair Display", serif; font-weight:800; font-size: clamp(48px, 12vw, 70px); margin:0; letter-spacing:-2px; }
+        .services-hero { font-family: "Poppins", sans-serif; font-weight:800; font-size: clamp(48px, 12vw, 70px); margin:0; letter-spacing:-2px; }
         .services-hero small { font-size: .35em; opacity:.8; vertical-align:super; margin-left:.25rem; }
         .services-list { padding-left:2rem; }
         .service-item { padding:2.25rem 0; border-top:1px solid rgba(2, 2, 2, 0.06); display:flex; align-items:flex-start; gap:1.5rem; }
@@ -154,7 +281,7 @@
 
          /* portfolio layout - large left heading with right-side list */
         .portfolio-section { background:#fff; color:#000; padding:6rem 0; }
-        .portfolio-hero { font-family: "Playfair Display", serif; font-weight:800; font-size: clamp(48px, 12vw, 50px); margin:0; letter-spacing:-2px; }
+        .portfolio-hero { font-family: "Poppins", sans-serif; font-weight:800; font-size: clamp(48px, 12vw, 50px); margin:0; letter-spacing:-2px; }
         .portfolio-hero small { font-size: .35em; opacity:.8; vertical-align:super; margin-left:.25rem; }
         .portfolio-desc { color:rgba(7, 7, 7, 0.75); max-width:520px; margin-left:0; margin-top:.35rem; text-align:left; }
         /* mobile adjustments */
@@ -170,7 +297,7 @@
         .portfolio-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
         .portfolio-card img { width: 100%; height: 250px; object-fit: cover; }
         .portfolio-card .card-body { padding: 1.5rem; }
-        .portfolio-card .card-title { font-family: "Playfair Display", serif; font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; color: #000; text-decoration: none; }
+        .portfolio-card .card-title { font-family: "Poppins", sans-serif; font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; color: #000; text-decoration: none; }
         .portfolio-card .card-title:hover { color: #000; }
         .portfolio-card .card-text { color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
 
@@ -180,7 +307,7 @@
         /* Contact layout */
         .contact-section { padding: 5rem 0; }
         .contact-left { padding-right: 3rem; }
-        .contact-left h2 { font-family: "Playfair Display", serif; font-weight:800; font-size:2rem; letter-spacing:1px; }
+        .contact-left h2 { font-family: "Poppins", sans-serif; font-weight:800; font-size:2rem; letter-spacing:1px; }
         .contact-sub { color:var(--muted); margin-bottom:1.25rem; font-size:1.05rem; }
         .contact-group h5 { font-weight:700; margin-top:1.25rem; margin-bottom:.5rem; }
         .contact-group p { margin:0 0 .6rem 0; color:var(--text); }
@@ -194,20 +321,32 @@
         @media (max-width:992px){ .contact-left { padding-right:0; margin-bottom:1.5rem; } .contact-map iframe{ height:360px; } }
 
         /* Price list section */
-        .price-section{ padding:4rem 0; background:#fafafa; }
+        .price-section{ padding:4rem 0; background:#fff; }
         .price-grid{ display:flex; gap:1rem; flex-wrap:wrap; }
         .price-card{ flex:1 1 220px; background:#fff; padding:1rem 1.1rem; border-radius:8px; box-shadow:0 6px 18px rgba(10,10,10,0.04); }
-        .price-title{ font-weight:700; font-family:"Playfair Display", serif; margin-bottom:.35rem; }
+        .price-title{ font-weight:700; font-family:"Poppins", sans-serif; margin-bottom:.35rem; }
         .price-range{ color:var(--muted); font-size:1.5rem;font-weight:700 }
         .price-note{ margin-top:1rem; color:var(--muted); font-size:.95rem; font-weight:700;}
 
         /* Blog / Latest posts cards - now using portfolio-card style */
-     </style>
+             .bg-light { background-color: #f8f9fa !important; }
+        body { background:#fff; }
+        
+        /* Shared theme: white menu on transparent hero, dark after scroll */
+        .navbar:not(.scrolled) .nav-link{ color:#fff !important; }
+        .navbar:not(.scrolled) .nav-link::after{ background:#fff; }
+        .navbar.scrolled .nav-link{ color:var(--text) !important; }
+        .navbar.scrolled .nav-link::after{ background:var(--text); }
+        .navbar:not(.scrolled) .navbar-toggler{ border-color:rgba(255,255,255,.55); }
+        .navbar.scrolled .navbar-toggler{ border-color:rgba(0,0,0,.15); }
+</style>
  </head>
  <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html" data-aos="fade-down"><img src="images/logo.png" alt="Refurnish Studio" style="height: 2.1rem;"></a>
+            <a class="navbar-brand" href="index.html" data-aos="fade-down">
+                <img id="navbarLogo" src="images/logo.png" data-logo-default="images/logo.png" data-logo-scrolled="images/logosd.png" alt="homesolution.id" style="height: 2.1rem;">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -227,7 +366,13 @@
         // small script to toggle navbar background and fix it to top on scroll
         (function(){
             const nav = document.querySelector('.navbar');
+            const logo = document.getElementById('navbarLogo');
             if(!nav) return;
+            if(logo){
+                logo.addEventListener('error', function(){
+                    if(logo.src.includes('logosd.png')) logo.src = logo.dataset.logoDefault;
+                });
+            }
             const onScroll = () => {
                 if(window.scrollY > 40) {
                     // prevent layout jump by adding top padding equal to nav height
@@ -235,9 +380,11 @@
                         document.body.style.paddingTop = nav.offsetHeight + 'px';
                     }
                     nav.classList.add('scrolled');
+                    if(logo && !logo.src.endsWith(logo.dataset.logoScrolled)) logo.src = logo.dataset.logoScrolled;
                 } else {
                     nav.classList.remove('scrolled');
                     document.body.style.paddingTop = '';
+                    if(logo && !logo.src.endsWith(logo.dataset.logoDefault)) logo.src = logo.dataset.logoDefault;
                 }
             };
             document.addEventListener('scroll', onScroll, {passive:true});
@@ -254,30 +401,182 @@
     <div class="parallax-hero">
         <div class="container" data-aos="fade-up" data-aos-duration="1500">
             <div class="hero-intro">
-                <h1>Upgrade Furnitur Lama Anda Menjadi Lebih Modern &amp; Elegan.</h1>
-                <p class="lead">Refurnish • Repaint • Re-upholstery • Custom Detail</p>
-                <div class="mt-4">
-                    <a href="https://wa.me/6282130001889" class="btn btn-custom btn-lg me-3">Konsultasi Gratis</a>
-                    <a href="portfolio.html" class="btn btn-custom btn-lg">Lihat Portfolio</a>
-                </div>
-                <ul class="feature-list">
-                    <li>Material premium</li>
-                    <li>Finishing rapi standar workshop</li>
-                    <li>Bisa ambil-antar</li>
-                    <li>Garansi pengerjaan</li>
-                </ul>
+                <h1>One Stop Home Solution.</h1>
+                <p class="lead">Refurnish Interior • Renovasi • Perbaikan Sipil</p>
+
+                <form class="hero-search" id="heroSearchForm">
+                    <div class="hero-search-grid">
+                        <div class="hero-search-field">
+                            <label for="heroLayanan">Pilih Layanan</label>
+                            <select id="heroLayanan" name="layanan">
+                                <option value="Sofa" selected>Sofa</option>
+                                <option value="Kursi">Kursi</option>
+                                <option value="Lemari">Lemari</option>
+                                <option value="Kitchen Set Refurbish">Kitchen Set Refurbish</option>
+                                <option value="Dining Set">Dining Set</option>
+                                <option value="Meja TV / Credenza">Meja TV / Credenza</option>
+                                <option value="Custom Furniture">Custom Furniture</option>
+                                <option value="Service AC">Service AC</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="hero-search-field">
+                            <label for="heroLokasi">Lokasi Anda</label>
+                            <select id="heroLokasi" name="lokasi">
+                                <option value="Bandung" selected>Bandung</option>
+                                <option value="Bandung Barat">Bandung Barat</option>
+                                <option value="Bali">Bali</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="hero-search-submit">Cari &amp; Konsultasi</button>
+                    </div>
+                </form>
             </div>
         </div> 
     </div>
+    <script>
+        // Hero search bar captures layanan + lokasi, then redirects to a
+        // dedicated request form page (request-form.html) — similar to how
+        // sejasa.com sends you to a full request page instead of a popup.
+        (function(){
+            const heroForm = document.getElementById('heroSearchForm');
+            if(!heroForm) return;
+            heroForm.addEventListener('submit', function(e){
+                e.preventDefault();
+                const layanan = document.getElementById('heroLayanan').value;
+                const lokasi = document.getElementById('heroLokasi').value;
+                const params = new URLSearchParams();
+                if (layanan) params.set('layanan', layanan);
+                if (lokasi) params.set('lokasi', lokasi);
+                const query = params.toString();
+                window.location.href = 'request-form.html' + (query ? '?' + query : '');
+            });
+        })();
+    </script>
+
+    <!-- --- Kategori Terpopuler Section --- -->
+    <section class="category-section" data-aos="fade-up">
+        <div class="container">
+            <div class="category-showcase">
+                <div class="promo-block">
+                    <div class="promo-head">
+                        <h2 class="promo-heading">Promo</h2>
+                    </div>
+                    <div id="promoCarousel" class="carousel slide promo-carousel" data-bs-ride="carousel" data-bs-interval="4200">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="images/project1-after.jpg" alt="Sofa refurbish premium">
+                                <div class="promo-overlay">
+                                    <span class="promo-kicker">homesolution.id</span>
+                                    <p class="promo-title">Refresh sofa lama jadi siap tampil lagi</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/project3-after.jpg" alt="Restorasi furniture kayu">
+                                <div class="promo-overlay">
+                                    <span class="promo-kicker">Finishing rapi</span>
+                                    <p class="promo-title">Restorasi furnitur dengan detail presisi</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/project4-after.jpg" alt="Custom interior refurbished">
+                                <div class="promo-overlay">
+                                    <span class="promo-kicker">Konsultasi workshop</span>
+                                    <p class="promo-title">Bawa ide interior, kami bantu wujudkan</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="popular-block">
+                    <div class="category-head">
+                        <h2 class="category-heading">Kategori Terpopuler</h2>
+                        <a href="portfolio.html" class="category-viewall">Lihat semua</a>
+                    </div>
+                    <div class="category-panel">
+                        <div class="category-grid">
+                            <a href="request-form.html?layanan=Sofa" class="category-card" aria-label="Sofa">
+                                <span class="category-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 64 48">
+                                        <path d="M15 23h34a7 7 0 0 1 7 7v8H8v-8a7 7 0 0 1 7-7Z"/>
+                                        <path d="M15 23v-7a6 6 0 0 1 6-6h22a6 6 0 0 1 6 6v7"/>
+                                        <path d="M8 38v5M56 38v5M18 30h28"/>
+                                    </svg>
+                                </span>
+                                <span class="category-label">Sofa</span>
+                            </a>
+                            <a href="request-form.html?layanan=Kursi" class="category-card" aria-label="Kursi">
+                                <span class="category-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 64 48">
+                                        <path d="M23 8h18a5 5 0 0 1 5 5v15H18V13a5 5 0 0 1 5-5Z"/>
+                                        <path d="M15 28h34M20 28v15M44 28v15M24 43h16"/>
+                                        <path d="M24 14h16"/>
+                                    </svg>
+                                </span>
+                                <span class="category-label">Kursi</span>
+                            </a>
+                            <a href="request-form.html?layanan=Lemari" class="category-card" aria-label="Lemari">
+                                <span class="category-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 64 48">
+                                        <rect x="16" y="7" width="32" height="36" rx="3"/>
+                                        <path d="M32 7v36M27 25h-4M41 25h-4M20 12h24"/>
+                                    </svg>
+                                </span>
+                                <span class="category-label">Lemari</span>
+                            </a>
+                            <a href="request-form.html?layanan=Kitchen%20Set%20Refurbish" class="category-card" aria-label="Kitchen Set Refurbish">
+                                <span class="category-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 64 48">
+                                        <path d="M13 18h38v25H13zM13 18l7-10h24l7 10"/>
+                                        <path d="M24 18v25M40 18v25M19 28h2M35 28h2M46 28h2"/>
+                                    </svg>
+                                </span>
+                                <span class="category-label">Kitchen Set</span>
+                            </a>
+                            <a href="request-form.html?layanan=Dining%20Set" class="category-card" aria-label="Dining Set">
+                                <span class="category-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 64 48">
+                                        <path d="M17 21h30a5 5 0 0 1 5 5v2H12v-2a5 5 0 0 1 5-5Z"/>
+                                        <path d="M19 28v15M45 28v15M25 43h14"/>
+                                        <path d="M22 15c0-5 4-9 10-9s10 4 10 9"/>
+                                    </svg>
+                                </span>
+                                <span class="category-label">Dining Set</span>
+                            </a>
+                            <a href="request-form.html?layanan=Meja%20TV%20%2F%20Credenza" class="category-card" aria-label="Meja TV atau Credenza">
+                                <span class="category-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 64 48">
+                                        <rect x="10" y="16" width="44" height="20" rx="3"/>
+                                        <path d="M18 36v6M46 36v6M22 25h20M22 31h12"/>
+                                        <path d="M46 20l5-5M49 26h6"/>
+                                    </svg>
+                                </span>
+                                <span class="category-label">Meja TV</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- --- About Us Section --- -->
 
         <div class="container my-5" data-aos="fade-up">
         <div class="row align-items-center">
             <div class="col-md-6" data-aos="fade-right">
-                <h2 class="about-hero">About Us</h2>
-                <p class="about-desc">Refurnish Studio adalah workshop refurbish dan restorasi furnitur yang berfokus pada hasil elegan, presisi, dan tahan lama. Dengan pengalaman tim lebih dari 10 tahun di dunia interior, kami menghadirkan solusi untuk memperbarui furnitur lama menjadi seperti baru—atau lebih baik dari versi awalnya.</p>
-                <a href="about.html" class="btn btn-custom">Learn More</a>
+                <h2 class="about-hero">Tentang Kami</h2>
+                <p class="about-desc">homesolution.id adalah workshop refurbish dan restorasi furnitur yang berfokus pada hasil elegan, presisi, dan tahan lama. Dengan pengalaman tim lebih dari 10 tahun di dunia interior, kami menghadirkan solusi untuk memperbarui furnitur lama menjadi seperti baru—atau lebih baik dari versi awalnya.</p>
+                <a href="about.html" class="btn btn-custom">Baca Lebih Lanjut</a>
             </div>
             <div class="col-md-6" data-aos="fade-left">
                 <img src="images/about.jpg" alt="About Us" class="img-fluid rounded">
@@ -292,9 +591,9 @@
     <div class="container my-5" data-aos="fade-up" data-aos-duration="1000">
         <div class="row">
             <div class="col-lg-4">
-                <h2 class="portfolio-hero">Our Portfolio</h2>
+                <h2 class="portfolio-hero">Portfolio Kami</h2>
                 <p class="portfolio-desc">Explore our latest refurbishment projects showcasing quality craftsmanship and modern designs.</p>
-                <a href="portfolio.html" class="btn btn-custom">View All Projects</a>
+                <a href="portfolio.html" class="btn btn-custom">Lihat Semua Proyek</a>
             </div>
             <div class="col-lg-8">
                 <div id="portfolioCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -373,7 +672,7 @@
     <div class="container my-5" data-aos="fade-up" data-aos-duration="1000">
         <div class="row">
             <div class="col-lg-4">
-                <h2 class="portfolio-hero">Latest Blog</h2>
+                <h2 class="portfolio-hero">Blog Terkini</h2>
                 <p class="portfolio-desc">Read our latest articles on furniture care, design tips, and refurbishment insights.</p>
                 <a href="blog.html" class="btn btn-custom">View All Posts</a>
             </div>
@@ -439,7 +738,7 @@
                     <div class="contact-group">
                         <h5>Get In Touch</h5>
                         <p>082130001889</p>
-                        <p>Instagram: refurnish.studio</p>
+                        <p>Instagram: homesolution.id</p>
                     </div>
 
                     <div class="contact-group">
@@ -465,9 +764,9 @@
     <!-- footer -->
     <footer class="bg-dark text-white text-center py-4">
         <div class="container">
-            <p>&copy; 2025 Refurnish Studio. All rights reserved.</p>
+            <p>&copy; 2025 homesolution.id. All rights reserved.</p>
             <div>
-                <a href="https://www.instagram.com/refurnish.studio/?utm_source=ig_web_button_share_sheet" class="text-white me-3">Instagram</a>
+                <a href="https://www.instagram.com/homesolution.id/?utm_source=ig_web_button_share_sheet" class="text-white me-3">Instagram</a>
             </div>
         </div>
     </footer>
